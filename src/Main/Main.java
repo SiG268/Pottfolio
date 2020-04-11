@@ -7,7 +7,7 @@ import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static final int MAX_PRECISION = 100;
+    public static final int MAX_PRECISION = 1000;
 
     public static void someDelay(){
         try {
