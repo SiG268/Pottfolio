@@ -41,9 +41,9 @@ public class Ramanujan implements CalculatePi{
         for(RamanujanRunner r : ThreadList){
             sum = sum.add(r.parcialSum);
         }
-        sum = sum.divide(new BigDecimal(9801),MathContext.DECIMAL128);
-        sum = sum.multiply(new BigDecimal(8).sqrt(MathContext.DECIMAL128));
-        BigDecimal pi = new BigDecimal(1).divide(sum,MathContext.DECIMAL128);
+        sum = sum.divide(new BigDecimal("9801"),MathContext.DECIMAL128);
+        sum = sum.multiply(new BigDecimal("8").sqrt(MathContext.DECIMAL128));
+        BigDecimal pi = new BigDecimal("1").divide(sum,MathContext.DECIMAL128);
         return pi;
     }
 

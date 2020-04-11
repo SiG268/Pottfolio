@@ -8,13 +8,13 @@ public class RamanujanRunner extends Thread{
     public int index;
     public int numThreads;
 
-    BigDecimal facBuffer = new BigDecimal(1);
-    BigDecimal facFourBuffer = new BigDecimal(1);
+    BigDecimal facBuffer = new BigDecimal("1");
+    BigDecimal facFourBuffer = new BigDecimal("1");
 
 
     BigDecimal counter;
     BigDecimal denum;
-    BigDecimal parcialSum = new BigDecimal(0);
+    BigDecimal parcialSum = BigDecimal.ZERO;
 
     public RamanujanRunner(int startIndex, int numThreads){
         this.index = startIndex;
@@ -42,9 +42,9 @@ public class RamanujanRunner extends Thread{
     public void run() {
         while(running){
             updateFactorial();
-            counter = facFourBuffer.multiply(new BigDecimal(1103).add(new BigDecimal(26390*index)));
+            counter = facFourBuffer.multiply(new BigDecimal("1103").add(new BigDecimal((26390*index))));
             denum = facBuffer.pow(4);
-            denum = denum.multiply(new BigDecimal(396).pow(index*4));
+            denum = denum.multiply(new BigDecimal("396").pow(index*4));
             parcialSum = parcialSum.add(counter.divide(denum,MathContext.DECIMAL128));
             index = index + numThreads;
         }

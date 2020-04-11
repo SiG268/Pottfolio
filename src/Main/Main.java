@@ -20,22 +20,14 @@ public class Main {
     }
 
     public static int precision(BigDecimal res, BigDecimal newRes){
-        int precReturn=0;
-        int newPreRes = newRes.intValue();
-        int preRes = res.intValue();
-        //Vorkommastellen unterschiedlich?
-        if(preRes==newPreRes) {
-            //Vorkommastellen auf 0 setzen
-            BigDecimal zeroRes = res.subtract(new BigDecimal(preRes));
-            BigDecimal zeroNewRes = newRes.subtract(new BigDecimal(newPreRes));
-
-            while(true){
+        int precReturn= 0;
+        int numerals = Math.min(res.precision(),newRes.precision());
+        while(numerals > precReturn){
                 if(res.movePointRight(precReturn+1).intValue()!=newRes.movePointRight(precReturn+1).intValue()) {
                     break;
                 }
                 precReturn++;
             }
-        }
         return precReturn;
     }
 
@@ -65,6 +57,6 @@ public class Main {
 //        pi.stopCalculation();
 //        System.out.println((timeStop - timeStart) + " ms");
 //        System.out.println(pi.getInternalSteps() + " calculation steps");
-        System.out.println(precision(new BigDecimal(1.0123454), new BigDecimal(1.012345)));
+        System.out.println(precision(new BigDecimal("22.022345"), new BigDecimal("22.212345")));
     }
 }
