@@ -13,7 +13,7 @@ public class Main {
 
     public static void someDelay(){
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class Main {
         CalculatePi pi = new Ramanujan();
 
         System.out.println("Start: " + pi.getMethodName());
-        pi.startCalculation(1);
+        pi.startCalculation(4);
 
         int prec = 0;
         BigDecimal result = BigDecimal.ZERO;
