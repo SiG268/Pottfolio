@@ -1,6 +1,8 @@
 package Main;
 
 
+import jdk.jshell.spi.SPIResolutionException;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -18,18 +20,26 @@ public class Main {
     }
 
     public static int precision(BigDecimal res, BigDecimal newRes){
-        int precision = 0;
-        BigDecimal difference = newRes.subtract(res);
-        MathContext mc = new MathContext(2, RoundingMode.DOWN);
-        for(int i = 0;i<MAX_PRECISION+5;i++){
-            if(difference.round(mc).intValue() == 0) {
-                difference = difference.movePointRight(1);
-                precision ++;
-            }else{
-                break;
+        int precReturn=0;
+        int newPreRes = newRes.intValue();
+        int preRes = res.intValue();
+        //Vorkommastellen unterschiedlich?
+        if(preRes==newPreRes) {
+            //Vorkommastellen auf 0 setzen
+            BigDecimal zeroRes = res.subtract(new BigDecimal(preRes));
+            BigDecimal zeroNewRes = newRes.subtract(new BigDecimal(newPreRes));
+            int numerals = Math.min(res.precision(), newRes.precision());
+
+            while(precReturn<numerals){
+                if(res.movePointRight(1)) {
+
+                }
+                precReturn++;
             }
+
+
         }
-        return precision;
+        return precReturn;
     }
 
     public static void main(String[] args) {
