@@ -51,7 +51,7 @@ public class Main {
     public static void main(String[] args) {
         CalculatePi pi = new Ramanujan();
 
-        System.out.println("Start: " + pi.getMethodName());
+        //System.out.println("Start: " + pi.getMethodName());
         pi.startCalculation(4);
 
         int prec = 0;
