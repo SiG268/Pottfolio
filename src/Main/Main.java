@@ -28,45 +28,43 @@ public class Main {
             //Vorkommastellen auf 0 setzen
             BigDecimal zeroRes = res.subtract(new BigDecimal(preRes));
             BigDecimal zeroNewRes = newRes.subtract(new BigDecimal(newPreRes));
-            int numerals = Math.min(res.precision(), newRes.precision());
 
-            while(precReturn<numerals){
-                if(res.movePointRight(1)) {
-
+            while(true){
+                if(res.movePointRight(precReturn+1).intValue()!=newRes.movePointRight(precReturn+1).intValue()) {
+                    break;
                 }
                 precReturn++;
             }
-
-
         }
         return precReturn;
     }
 
     public static void main(String[] args) {
-        CalculatePi pi = new Ramanujan();
-
-        System.out.println("Start: " + pi.getMethodName());
-        pi.startCalculation(1);
-
-        int prec = 0;
-        BigDecimal result = BigDecimal.ZERO;
-        long timeStart = System.currentTimeMillis();
-        int i = 0;
-        while(prec < MAX_PRECISION){
-            someDelay();
-            BigDecimal newResult = pi.getValue();
-            int newPrec = precision(result,newResult);
-            if(newPrec != prec){
-                System.out.println("pi (" + newPrec + "): " + newResult);
-                prec = newPrec;
-            }
-            result = newResult;
-        }
-        System.out.println("Last pi: " + result);
-        System.out.println("Pi: "+ result);
-        long timeStop = System.currentTimeMillis();
-        pi.stopCalculation();
-        System.out.println((timeStop - timeStart) + " ms");
-        System.out.println(pi.getInternalSteps() + " calculation steps");
+//        CalculatePi pi = new Ramanujan();
+//
+//        System.out.println("Start: " + pi.getMethodName());
+//        pi.startCalculation(1);
+//
+//        int prec = 0;
+//        BigDecimal result = BigDecimal.ZERO;
+//        long timeStart = System.currentTimeMillis();
+//        int i = 0;
+//        while(prec < MAX_PRECISION){
+//            someDelay();
+//            BigDecimal newResult = pi.getValue();
+//            int newPrec = precision(result,newResult);
+//            if(newPrec != prec){
+//                System.out.println("pi (" + newPrec + "): " + newResult);
+//                prec = newPrec;
+//            }
+//            result = newResult;
+//        }
+//        System.out.println("Last pi: " + result);
+//        System.out.println("Pi: "+ result);
+//        long timeStop = System.currentTimeMillis();
+//        pi.stopCalculation();
+//        System.out.println((timeStop - timeStart) + " ms");
+//        System.out.println(pi.getInternalSteps() + " calculation steps");
+        System.out.println(precision(new BigDecimal(1.0123454), new BigDecimal(1.012345)));
     }
 }
