@@ -22,18 +22,19 @@ public class Main {
     public static int precision(BigDecimal res, BigDecimal newRes){
         int precReturn= 0; //change to -1 to return -1 if decimal places differ
 
-        MathContext mc = new MathContext(1,RoundingMode.DOWN);
-        BigDecimal currentNumeral;
-        int realResPrec = res.precision()-res.round(mc).precision();
-        int realNewResPrec = newRes.precision()-newRes.round(mc).precision();
+        int preNumerals = res.intValue();
+        int realResPrec = res.precision()-new BigDecimal(preNumerals).precision();
+        preNumerals = newRes.intValue();
+        int realNewResPrec = newRes.precision()-new BigDecimal(preNumerals).precision();
         int numerals = Math.min(realResPrec,realNewResPrec);
+        int currentNumeral;
         while(numerals > precReturn){
-            currentNumeral = res.movePointRight(precReturn + 1).round(mc);
-            if(currentNumeral.compareTo(newRes.movePointRight(precReturn+1).round(mc))!=0) {
+            currentNumeral = res.movePointRight(precReturn+1).intValue();
+            if(currentNumeral!=newRes.movePointRight(precReturn+1).intValue()) {
                     break;
             }
-            res.subtract(currentNumeral);
-            newRes.subtract(currentNumeral);
+            res.subtract(new BigDecimal(currentNumeral));
+            newRes.subtract(new BigDecimal(currentNumeral));
             precReturn++;
         }
         return precReturn;
