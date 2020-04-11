@@ -7,6 +7,7 @@ public class RamanujanRunner extends Thread{
     public boolean running = true;
     public int index;
     public int numThreads;
+    private int threadNumber;
 
     BigDecimal facBuffer = new BigDecimal("1");
     BigDecimal facFourBuffer = new BigDecimal("1");
@@ -16,8 +17,17 @@ public class RamanujanRunner extends Thread{
     BigDecimal denum;
     BigDecimal parcialSum = BigDecimal.ZERO;
 
+    public int getThreadNumber() {
+        return threadNumber;
+    }
+
+    public void setThreadNumber(int threadNumber) {
+        this.threadNumber = threadNumber;
+    }
+
     public RamanujanRunner(int startIndex, int numThreads){
         this.index = startIndex;
+        setThreadNumber(startIndex);
         this.numThreads = numThreads;
     }
     public void updateFactorial(){
