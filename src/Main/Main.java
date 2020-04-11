@@ -37,9 +37,6 @@ public class Main {
             //Move to Right
             res = res.movePointRight(1);
             newRes = newRes.movePointRight(1);
-
-            System.out.println("Res: "+res);
-            System.out.println("NewRes: "+newRes);
             precReturn++;
         }
         return precReturn;
@@ -52,10 +49,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
-        int prec=precision(new BigDecimal("1.1"), new BigDecimal("2.0"));
-        System.out.println("Präzision: "+prec);
-        /* CalculatePi pi = new Ramanujan();
+        CalculatePi pi = new Ramanujan();
 
         System.out.println("Start: " + pi.getMethodName());
         pi.startCalculation(1);
@@ -79,6 +73,6 @@ public class Main {
         long timeStop = System.currentTimeMillis();
         pi.stopCalculation();
         System.out.println((timeStop - timeStart) + " ms");
-        System.out.println(pi.getInternalSteps() + " calculation steps");*/
+        System.out.println(pi.getInternalSteps() + " calculation steps");
     }
 }
