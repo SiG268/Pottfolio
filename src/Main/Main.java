@@ -74,5 +74,6 @@ public class Main {
         pi.stopCalculation();
         System.out.println((timeStop - timeStart) + " ms");
         System.out.println(pi.getInternalSteps() + " calculation steps");
+
     }
 }
