@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static final int MAX_PRECISION = 1000;
+    public static final int MAX_PRECISION = 20;
 
     public static void someDelay(){
         try {
@@ -20,12 +20,18 @@ public class Main {
     }
 
     public static int precision(BigDecimal res, BigDecimal newRes){
-        int precReturn= 0;
-        int numerals = Math.min(res.precision(),newRes.precision());
+        int precReturn= 0; //change to -1 to return -1 if decimal places differ
+        MathContext mc = new MathContext(1,RoundingMode.DOWN);
+        int realResPrec = res.precision()-res.round(mc).precision();
+        int realNewResPrec = newRes.precision()-newRes.round(mc).precision();
+
+        int numerals = Math.min(realResPrec,realNewResPrec);
         while(numerals > precReturn){
                 if(res.movePointRight(precReturn+1).intValue()!=newRes.movePointRight(precReturn+1).intValue()) {
                     break;
                 }
+                res.subtract(res.movePointRight(precReturn+1).round(mc));
+                newRes.subtract(res.movePointRight(precReturn+1).round(mc));
                 precReturn++;
             }
         return precReturn;
@@ -57,6 +63,6 @@ public class Main {
 //        pi.stopCalculation();
 //        System.out.println((timeStop - timeStart) + " ms");
 //        System.out.println(pi.getInternalSteps() + " calculation steps");
-        System.out.println(precision(new BigDecimal("22.022345"), new BigDecimal("22.212345")));
+        System.out.println(precision(new BigDecimal("2.433"), new BigDecimal("2.33")));
     }
 }
