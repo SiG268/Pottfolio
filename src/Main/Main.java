@@ -20,28 +20,42 @@ public class Main {
     }
 
     public static int precision(BigDecimal res, BigDecimal newRes){
-        int precReturn= 0; //change to -1 to return -1 if decimal places differ
+        int precReturn= -1;
+        //Check Min Numerals
+        int numerals = Math.min(getRealPrecision(res),getRealPrecision(newRes));
 
-        int preNumerals = res.intValue();
-        int realResPrec = res.precision()-new BigDecimal(preNumerals).precision();
-        preNumerals = newRes.intValue();
-        int realNewResPrec = newRes.precision()-new BigDecimal(preNumerals).precision();
-        int numerals = Math.min(realResPrec,realNewResPrec);
-        int currentNumeral;
         while(numerals > precReturn){
-            currentNumeral = res.movePointRight(precReturn+1).intValue();
-            if(currentNumeral!=newRes.movePointRight(precReturn+1).intValue()) {
-                    break;
+            if(res.intValue()!=newRes.intValue()){
+                break;
             }
-            res.subtract(new BigDecimal(currentNumeral));
-            newRes.subtract(new BigDecimal(currentNumeral));
+            //Cut the head
+            res= res.subtract(new BigDecimal(res.intValue()));
+            newRes= newRes.subtract(new BigDecimal(newRes.intValue()));
+            //todo throw IntegerOverflow Exception
+
+
+            //Move to Right
+            res = res.movePointRight(1);
+            newRes = newRes.movePointRight(1);
+
+            System.out.println("Res: "+res);
+            System.out.println("NewRes: "+newRes);
             precReturn++;
         }
         return precReturn;
     }
 
+
+    public static int getRealPrecision(BigDecimal number){
+        int preNumerals = number.intValue();
+        return number.precision()-new BigDecimal(preNumerals).precision();
+    }
+
     public static void main(String[] args) {
-        CalculatePi pi = new Ramanujan();
+
+        int prec=precision(new BigDecimal("1.1"), new BigDecimal("2.0"));
+        System.out.println("Präzision: "+prec);
+        /* CalculatePi pi = new Ramanujan();
 
         System.out.println("Start: " + pi.getMethodName());
         pi.startCalculation(1);
@@ -65,6 +79,6 @@ public class Main {
         long timeStop = System.currentTimeMillis();
         pi.stopCalculation();
         System.out.println((timeStop - timeStart) + " ms");
-        System.out.println(pi.getInternalSteps() + " calculation steps");
+        System.out.println(pi.getInternalSteps() + " calculation steps");*/
     }
 }
