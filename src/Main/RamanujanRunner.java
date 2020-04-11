@@ -21,7 +21,7 @@ public class RamanujanRunner extends Thread{
         this.numThreads = numThreads;
     }
     public void updateFactorial(){
-        if(index-numThreads>0) {
+        if(index-numThreads>=0) {
             for (int i = index; i > (index - numThreads); i--) {
                 facBuffer = facBuffer.multiply(new BigDecimal(i));
             }
@@ -46,11 +46,6 @@ public class RamanujanRunner extends Thread{
             denum = facBuffer.pow(4);
             denum = denum.multiply(new BigDecimal(396).pow(index*4));
             parcialSum = parcialSum.add(counter.divide(denum,MathContext.DECIMAL128));
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             index = index + numThreads;
         }
     }

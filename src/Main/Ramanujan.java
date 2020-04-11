@@ -52,7 +52,6 @@ public class Ramanujan implements CalculatePi{
         int internalSteps = 0;
         for(RamanujanRunner r : ThreadList){
             internalSteps += r.index;
-            System.out.println(r.index);
         }
         return internalSteps;
     }
