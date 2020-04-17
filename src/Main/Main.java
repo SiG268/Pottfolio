@@ -1,9 +1,12 @@
 package Main;
 
+import Ramanujan.Ramanujan;
+
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+    //Konstanten
     public static final int MAX_PRECISION = 8;
 
     public static void someDelay(){
@@ -26,7 +29,7 @@ public class Main {
             //Cut the head
             res= res.subtract(new BigDecimal(res.intValue()));
             newRes= newRes.subtract(new BigDecimal(newRes.intValue()));
-            //todo throw IntegerOverflow Exception
+            //todo throw IntegerOverflow RuntimeException
 
 
             //Move to Right

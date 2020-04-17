@@ -1,14 +1,15 @@
-package Main;
+package Ramanujan;
 
+import Main.PiCalculationThread;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
-public class RamanujanRunner extends PiCalculationThread{
+public class RamanujanRunner extends PiCalculationThread {
+    //Konstanten
+    final BigDecimal NUM1103 = new BigDecimal(1103);
+    final BigDecimal NUM396 = new BigDecimal(396);
+
     BigDecimal facBuffer = new BigDecimal("1");
     BigDecimal facFourBuffer = new BigDecimal("1");
-    final BigDecimal ONEK_CONST = new BigDecimal(1103);
-    final BigDecimal THREE_CONST = new BigDecimal(396);
 
     BigDecimal counter;
     BigDecimal denum;
@@ -19,11 +20,11 @@ public class RamanujanRunner extends PiCalculationThread{
     }
 
     public void updateFactorial(){
-        if(index-numThreads>=0) {
-            for (int i = index; i > (index - numThreads); i--) {
+        if(index- NUMTHREADS >=0) {
+            for (int i = index; i > (index - NUMTHREADS); i--) {
                 facBuffer = facBuffer.multiply(new BigDecimal(i));
             }
-            for (int i = (4 * index); i > ((index - numThreads) * 4); i--) {
+            for (int i = (4 * index); i > ((index - NUMTHREADS) * 4); i--) {
                 facFourBuffer = facFourBuffer.multiply(new BigDecimal(i));
             }
         }else{
@@ -39,9 +40,9 @@ public class RamanujanRunner extends PiCalculationThread{
     @Override
     public BigDecimal CalculateSummand(int index){
         updateFactorial();
-        counter = facFourBuffer.multiply(ONEK_CONST.add(new BigDecimal((26390*index))));
+        counter = facFourBuffer.multiply(NUM1103.add(new BigDecimal((26390*index))));
         denum = facBuffer.pow(4);
-        denum = denum.multiply(THREE_CONST.pow(index*4));
+        denum = denum.multiply(NUM396.pow(index*4));
         BigDecimal summand =counter.divide(denum,super.mc);
         return summand;
     }
@@ -49,7 +50,7 @@ public class RamanujanRunner extends PiCalculationThread{
     public void run() {
         while(running){
             parcialSum = parcialSum.add(CalculateSummand(index));
-            index = index + numThreads;
+            index = index + NUMTHREADS;
         }
     }
 }

@@ -1,16 +1,18 @@
-package Main;
+package Euler;
 
+import Main.CalculatePi;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-public class Euler implements CalculatePi{
+public class Euler implements CalculatePi {
+    //Konstanten
+    public final MathContext MC = new MathContext(100, RoundingMode.HALF_EVEN);
 
     public ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
     public EulerRunner r;
-    public final MathContext mc = new MathContext(100, RoundingMode.HALF_EVEN);
-    public final BigDecimal SIX_CONST = new BigDecimal(6);
+
     @Override
     public boolean startCalculation() {
         r = new EulerRunner(0,1);
@@ -42,8 +44,8 @@ public class Euler implements CalculatePi{
         for(EulerRunner t : ThreadList){
             sum = sum.add(t.parcialSum);
         }
-        sum = sum.multiply(SIX_CONST);
-        sum = sum.sqrt(mc);
+        sum = sum.multiply(new BigDecimal(6));
+        sum = sum.sqrt(MC);
         return sum;
     }
 
@@ -51,7 +53,7 @@ public class Euler implements CalculatePi{
     public int getInternalSteps() {
         int internalSteps = 0;
         for(EulerRunner r : ThreadList){
-            internalSteps += (r.index-r.getThreadNumber())/r.numThreads;
+            internalSteps += (r.getIndex()-r.STARTINDEX)/r.NUMTHREADS;
         }
         return internalSteps;
     }

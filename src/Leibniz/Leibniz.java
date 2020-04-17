@@ -1,15 +1,15 @@
-package Main;
+package Leibniz;
+
+import Main.CalculatePi;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
-public class Leibniz implements CalculatePi{
+public class Leibniz implements CalculatePi {
 
     public ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
     public LeibnizRunner r;
-    public final MathContext mc = new MathContext(1000, RoundingMode.HALF_EVEN);
+
 
     @Override
     public boolean startCalculation() {
@@ -50,7 +50,7 @@ public class Leibniz implements CalculatePi{
     public int getInternalSteps() {
         int internalSteps = 0;
         for(LeibnizRunner r : ThreadList){
-            internalSteps += (r.index-(2*r.getThreadNumber())+1)/r.numThreads;
+            internalSteps += (r.getIndex()-(2*r.STARTINDEX)+1)/r.NUMTHREADS;
         }
         return internalSteps;
     }

@@ -34,8 +34,8 @@ public class MonteCarlo implements CalculatePi {
     @Override
     public BigDecimal getValue() {
         BigDecimal pi;
-        BigDecimal treffer=new BigDecimal("0");
-        BigDecimal versuche=new BigDecimal("0");
+        BigDecimal treffer=BigDecimal.ZERO;
+        BigDecimal versuche=BigDecimal.ZERO;
         for (MonteCarloRunner thread:ThreadList) {
             treffer = treffer.add(new BigDecimal(thread.getTreffer()));
             versuche= versuche.add(new BigDecimal(thread.getVersuche()));
@@ -55,6 +55,6 @@ public class MonteCarlo implements CalculatePi {
 
     @Override
     public String getMethodName() {
-        return "Monte-Carlo";
+        return "Monte-Carlo approximation";
     }
 }

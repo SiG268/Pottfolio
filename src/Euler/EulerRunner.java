@@ -1,8 +1,10 @@
-package Main;
+package Euler;
+
+import Main.PiCalculationThread;
 
 import java.math.BigDecimal;
 
-public class EulerRunner extends PiCalculationThread{
+public class EulerRunner extends PiCalculationThread {
     public EulerRunner(int startIndex, int numThreads) {
         super(startIndex, numThreads);
     }
@@ -16,7 +18,7 @@ public class EulerRunner extends PiCalculationThread{
     public void run() {
         while (running) {
             parcialSum = parcialSum.add(CalculateSummand(index));
-            index = index + numThreads;
+            index = index + NUMTHREADS;
         }
     }
 }

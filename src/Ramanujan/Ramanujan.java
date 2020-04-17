@@ -1,16 +1,20 @@
-package Main;
+package Ramanujan;
+
+import Main.CalculatePi;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-public class Ramanujan implements CalculatePi{
+public class Ramanujan implements CalculatePi {
+    //Konstanten
+    public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
+    public final BigDecimal COEFFICIENT = new BigDecimal(8).sqrt(MC).divide(new BigDecimal(9801), MC);
 
     public ArrayList<RamanujanRunner> ThreadList = new ArrayList<RamanujanRunner>();
     public RamanujanRunner r;
-    public final MathContext mc = new MathContext(10000, RoundingMode.HALF_EVEN);
-    public final BigDecimal FINAL_CONST = new BigDecimal(8).sqrt(mc).divide(new BigDecimal(9801),mc);
+
 
     @Override
     public boolean startCalculation() {
@@ -43,8 +47,8 @@ public class Ramanujan implements CalculatePi{
         for(RamanujanRunner r : ThreadList){
             sum = sum.add(r.parcialSum);
         }
-        sum = sum.multiply(FINAL_CONST);
-        BigDecimal pi = BigDecimal.ONE.divide(sum,mc);
+        sum = sum.multiply(COEFFICIENT);
+        BigDecimal pi = BigDecimal.ONE.divide(sum, MC);
         System.out.println(pi);
         return pi;
     }
@@ -53,7 +57,7 @@ public class Ramanujan implements CalculatePi{
     public int getInternalSteps() {
         int internalSteps = 0;
         for(RamanujanRunner r : ThreadList){
-            internalSteps += (r.index-r.getThreadNumber())/r.numThreads;
+            internalSteps += (r.getIndex()-r.STARTINDEX)/r.NUMTHREADS;
         }
         return internalSteps;
     }
