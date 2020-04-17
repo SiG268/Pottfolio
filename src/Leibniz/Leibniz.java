@@ -1,16 +1,20 @@
 package Leibniz;
 
+import Euler.EulerRunner;
 import Main.CalculatePi;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Leibniz implements CalculatePi {
-
-    public ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
+    //ArrayList zur Threadverwaltung
+    public final ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
+    //Platzhalter für EulerRunner Initialisierung in startCalculation
+    //maybe delete this
     public LeibnizRunner r;
 
-
+    //startet die Single Thread Berechnung
+    //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
     @Override
     public boolean startCalculation() {
         r = new LeibnizRunner(0,1);
@@ -19,6 +23,9 @@ public class Leibniz implements CalculatePi {
         return false;
     }
 
+    //startet die multi Thread Berechnung
+    //Erhöht den Startindex bei jedem Durchgang der for Schleife
+    //Stellt damit sicher das jeder Thread andere Summanden berechnet -> Dopplungen verhindern
     @Override
     public boolean startCalculation(int numThreads) {
         for(int i = 1;i<=numThreads;i++) {
@@ -29,32 +36,39 @@ public class Leibniz implements CalculatePi {
         return false;
     }
 
+    //Beendet die Berechnung
     @Override
     public void stopCalculation() {
         for(LeibnizRunner t : ThreadList)
             t.running = false;
     }
 
-
+    //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
     public BigDecimal getValue() {
-        BigDecimal pi = new BigDecimal(0);
+        BigDecimal pi = BigDecimal.ZERO;
+        //Addiert die Teilsummen der Threads zusammen
         for(LeibnizRunner r : ThreadList){
             pi = pi.add(r.parcialSum);
         }
+        //Teilsummen ergeben pi/4 -> Auflösen nach Pi
         pi = pi.multiply(new BigDecimal("4"));
         return pi;
     }
 
+    //Berechnet die gemachten Berechnungsschritte und gibt sie zurück
     @Override
     public int getInternalSteps() {
         int internalSteps = 0;
+        //Addiert die internalSteps der einzelnen Threads
         for(LeibnizRunner r : ThreadList){
-            internalSteps += (r.getIndex()-(2*r.STARTINDEX)+1)/r.NUMTHREADS;
+            // => Schritte = (Index-STARTINDEX)/NUMTHREADS
+            internalSteps += (r.getIndex()-(r.STARTINDEX))/r.NUMTHREADS;
         }
         return internalSteps;
     }
 
+    //Gibt den Namen der verwendeten Berechnungsmethode aus
     @Override
     public String getMethodName() {
         return "Leibniz series approximation";

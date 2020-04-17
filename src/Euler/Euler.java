@@ -9,10 +9,14 @@ import java.util.ArrayList;
 public class Euler implements CalculatePi {
     //Konstanten
     public final MathContext MC = new MathContext(100, RoundingMode.HALF_EVEN);
-
-    public ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
+    //ArrayList zur Threadverwaltung
+    private final ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
+    //Platzhalter für EulerRunner Initialisierung in startCalculation
+    //maybe delete this
     public EulerRunner r;
 
+    //startet die Single Thread Berechnung
+    //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
     @Override
     public boolean startCalculation() {
         r = new EulerRunner(0,1);
@@ -21,6 +25,9 @@ public class Euler implements CalculatePi {
         return false;
     }
 
+    //startet die multi Thread Berechnung
+    //Erhöht den Startindex bei jedem Durchgang der for Schleife
+    //Stellt damit sicher das jeder Thread andere Summanden berechnet -> Dopplungen verhindern
     @Override
     public boolean startCalculation(int numThreads) {
         for(int i = 1;i<=numThreads;i++) {
@@ -31,33 +38,41 @@ public class Euler implements CalculatePi {
         return false;
     }
 
+    //Beendet die Berechnung
     @Override
     public void stopCalculation() {
         for(EulerRunner t : ThreadList)
             t.running = false;
     }
 
-
+    //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
     public BigDecimal getValue() {
-        BigDecimal sum = new BigDecimal(0);
+        BigDecimal pi = BigDecimal.ZERO;
+        //Addiert die Teilsummen der Threads zusammen
         for(EulerRunner t : ThreadList){
-            sum = sum.add(t.parcialSum);
+            pi = pi.add(t.parcialSum);
         }
-        sum = sum.multiply(new BigDecimal(6));
-        sum = sum.sqrt(MC);
-        return sum;
+        //Teilsummen ergeben (pi^2)/6 -> Auflösen nach Pi
+        pi = pi.multiply(new BigDecimal(6));
+        pi = pi.sqrt(MC);
+        return pi;
     }
 
+    //Berechnet die gemachten Berechnungsschritte und gibt sie zurück
     @Override
     public int getInternalSteps() {
         int internalSteps = 0;
+        //Addiert die internalSteps der einzelnen Threads
         for(EulerRunner r : ThreadList){
+            //Es gilt: Index = STARTINDEX+NUMTHREADS*Rechenschritte
+            // => Schritte = (Index-STARTINDEX)/NUMTHREADS
             internalSteps += (r.getIndex()-r.STARTINDEX)/r.NUMTHREADS;
         }
         return internalSteps;
     }
 
+    //Gibt den Namen der verwendeten Berechnungsmethode aus
     @Override
     public String getMethodName() {
         return "Euler series approximation";
