@@ -1,19 +1,14 @@
 package Main;
 
-
-import jdk.jshell.spi.SPIResolutionException;
-
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static final int MAX_PRECISION = 20;
+    public static final int MAX_PRECISION = 8;
 
     public static void someDelay(){
         try {
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.SECONDS.sleep(15);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -52,7 +47,7 @@ public class Main {
         CalculatePi pi = new Ramanujan();
 
         //System.out.println("Start: " + pi.getMethodName());
-        pi.startCalculation(4);
+        pi.startCalculation(8);
 
         int prec = 0;
         BigDecimal result = BigDecimal.ZERO;
@@ -68,12 +63,9 @@ public class Main {
             }
             result = newResult;
         }
-        System.out.println("Last pi: " + result);
-        System.out.println("Pi: "+ result);
         long timeStop = System.currentTimeMillis();
         pi.stopCalculation();
         System.out.println((timeStop - timeStart) + " ms");
         System.out.println(pi.getInternalSteps() + " calculation steps");
-
     }
 }
