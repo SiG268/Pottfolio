@@ -8,18 +8,14 @@ public class EulerRunner extends PiCalculationThread{
     }
 
     @Override
-    public BigDecimal CalculateSummand(int index) throws PrecisionLimitReachedException {
+    public BigDecimal CalculateSummand(int index){
         BigDecimal summand = new BigDecimal(1);
         summand = summand.divide(new BigDecimal(index).pow(2),mc);
         return summand;
     }
     public void run() {
         while (running) {
-            try {
-                parcialSum = parcialSum.add(CalculateSummand(index));
-            } catch (PrecisionLimitReachedException e) {
-                e.printStackTrace();
-            }
+            parcialSum = parcialSum.add(CalculateSummand(index));
             index = index + numThreads;
         }
     }

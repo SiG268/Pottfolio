@@ -24,5 +24,5 @@ public abstract class PiCalculationThread extends Thread{
         this.numThreads = numThreads;
     }
 
-    public abstract BigDecimal CalculateSummand(int index) throws PrecisionLimitReachedException;
+    public abstract BigDecimal CalculateSummand(int index);
 }

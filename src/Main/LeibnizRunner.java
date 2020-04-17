@@ -9,7 +9,7 @@ public class LeibnizRunner extends PiCalculationThread{
     }
 
     @Override
-    public BigDecimal CalculateSummand(int index) throws PrecisionLimitReachedException {
+    public BigDecimal CalculateSummand(int index){
         BigDecimal summand = BigDecimal.ONE;
         summand = summand.divide(new BigDecimal(2*index-1),mc);
         summand = summand.subtract(BigDecimal.ONE.divide(new BigDecimal(2*index+1),mc));
@@ -18,16 +18,7 @@ public class LeibnizRunner extends PiCalculationThread{
 
     public void run(){
         while(running == true) {
-            try {
-                parcialSum = parcialSum.add(CalculateSummand(index));
-            } catch (PrecisionLimitReachedException e) {
-                e.printStackTrace();
-            }
-            try {
-                sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            parcialSum = parcialSum.add(CalculateSummand(index));
             index = index + numThreads;
         }
     }

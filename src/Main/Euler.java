@@ -10,7 +10,7 @@ public class Euler implements CalculatePi{
     public ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
     public EulerRunner r;
     public final MathContext mc = new MathContext(100, RoundingMode.HALF_EVEN);
-
+    public final BigDecimal SIX_CONST = new BigDecimal(6);
     @Override
     public boolean startCalculation() {
         r = new EulerRunner(0,1);
@@ -42,7 +42,7 @@ public class Euler implements CalculatePi{
         for(EulerRunner t : ThreadList){
             sum = sum.add(t.parcialSum);
         }
-        sum = sum.multiply(new BigDecimal("6"));
+        sum = sum.multiply(SIX_CONST);
         sum = sum.sqrt(mc);
         return sum;
     }
