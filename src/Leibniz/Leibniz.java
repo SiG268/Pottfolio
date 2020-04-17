@@ -17,23 +17,33 @@ public class Leibniz implements CalculatePi {
     //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
     @Override
     public boolean startCalculation() {
-        r = new LeibnizRunner(0,1);
-        ThreadList.add(r);
-        r.start();
-        return false;
+        return startCalculation(1);
     }
+
 
     //startet die multi Thread Berechnung
     //Erhöht den Startindex bei jedem Durchgang der for Schleife
     //Stellt damit sicher das jeder Thread andere Summanden berechnet -> Dopplungen verhindern
     @Override
     public boolean startCalculation(int numThreads) {
+        if(ThreadList.size()>0){
+            boolean threadrunning=false;
+            for (LeibnizRunner t:ThreadList) {
+                threadrunning=threadrunning || t.running;
+            }
+            if(!threadrunning){
+                ThreadList.clear();
+            }
+            else{
+                return false;
+            }
+        }
         for(int i = 1;i<=numThreads;i++) {
             r = new LeibnizRunner(i,numThreads);
             ThreadList.add(r);
             r.start();
         }
-        return false;
+        return true;
     }
 
     //Beendet die Berechnung

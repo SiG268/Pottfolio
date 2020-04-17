@@ -1,5 +1,7 @@
 package Euler;
 
+import Exceptions.IntegerOverflowException;
+import Leibniz.LeibnizRunner;
 import Main.CalculatePi;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -19,10 +21,7 @@ public class Euler implements CalculatePi {
     //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
     @Override
     public boolean startCalculation() {
-        r = new EulerRunner(0,1);
-        ThreadList.add(r);
-        r.start();
-        return false;
+        return startCalculation(1);
     }
 
     //startet die multi Thread Berechnung
@@ -30,12 +29,24 @@ public class Euler implements CalculatePi {
     //Stellt damit sicher das jeder Thread andere Summanden berechnet -> Dopplungen verhindern
     @Override
     public boolean startCalculation(int numThreads) {
+        if(ThreadList.size()>0){
+            boolean threadrunning=false;
+            for (EulerRunner t:ThreadList) {
+                threadrunning=threadrunning || t.running;
+            }
+            if(!threadrunning){
+                ThreadList.clear();
+            }
+            else{
+                return false;
+            }
+        }
         for(int i = 1;i<=numThreads;i++) {
             r = new EulerRunner(i,numThreads);
             ThreadList.add(r);
             r.start();
         }
-        return false;
+        return true;
     }
 
     //Beendet die Berechnung

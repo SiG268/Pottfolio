@@ -46,17 +46,16 @@ public class Point {
         return "X: "+getX()+"\nY: "+getY();
     }
 
-    //Berechnet die Distanz zwischen this (Punkt) und übergebenem Punkt p
-    //Allgemein: Distanz d^2 = (this.x-p.x)^2 + (this.y - p.y)^2
-    public BigDecimal distance(Point p){
-        //Differenz der X Koordinate
-        BigDecimal kathX=this.getX().subtract(p.getX());
-        //Differenz der Y Koordinate
-        BigDecimal kathY=this.getY().subtract(p.getY());
-        //Distanz^2 = DifferenzX^2 + DifferenzY^2
-        BigDecimal hypo= kathX.pow(2).add(kathY.pow(2));
-        //Rückgabe der Wurzel aus hypo = Distanz
-        return hypo.sqrt(MC);
+    //Evaluiert den Abstand vom Punkt zu 0/0
+    //1=kleiner/gleich 1
+    //0=größer 1
+    public int eval(){
+        BigDecimal hypo= this.getX().pow(2).add(this.getY().pow(2));
+        hypo = hypo.sqrt(MC);
+        if(hypo.compareTo(BigDecimal.ONE)!=1){
+            return 1;
+        }
+        return 0;
     }
 
 

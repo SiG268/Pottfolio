@@ -23,10 +23,7 @@ public class Ramanujan implements CalculatePi {
     //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
     @Override
     public boolean startCalculation() {
-        RamanujanRunner t = new RamanujanRunner(0,1);
-        ThreadList.add(t);
-        t.start();
-        return false;
+        return startCalculation(1);
     }
 
     //startet die multi Thread Berechnung
@@ -34,12 +31,24 @@ public class Ramanujan implements CalculatePi {
     //Stellt damit sicher das jeder Thread andere Summanden berechnet -> Dopplungen verhindern
     @Override
     public boolean startCalculation(int numThreads) {
-        for(int i = 0;i<numThreads;i++) {
+        if(ThreadList.size()>0){
+            boolean threadrunning=false;
+            for (RamanujanRunner t:ThreadList) {
+                threadrunning=threadrunning || t.running;
+            }
+            if(!threadrunning){
+                ThreadList.clear();
+            }
+            else{
+                return false;
+            }
+        }
+                for(int i = 0;i<numThreads;i++) {
             RamanujanRunner t = new RamanujanRunner(i,numThreads);
             ThreadList.add(t);
             t.start();
         }
-        return false;
+        return true;
     }
 
     //Beendet die Berechnung

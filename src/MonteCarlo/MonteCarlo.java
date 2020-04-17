@@ -1,4 +1,5 @@
 package MonteCarlo;
+import Leibniz.LeibnizRunner;
 import Main.CalculatePi;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -15,21 +16,30 @@ public class MonteCarlo implements CalculatePi {
     //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
     @Override
     public boolean startCalculation() {
-        MonteCarloRunner thread= new MonteCarloRunner();
-        ThreadList.add(thread);
-        thread.start();
-        return false;
+        return startCalculation(1);
     }
 
     //startet die multi Thread Berechnung
     @Override
     public boolean startCalculation(int numThreads) {
+        if(ThreadList.size()>0){
+            boolean threadrunning=false;
+            for (MonteCarloRunner t:ThreadList) {
+                threadrunning=threadrunning || t.running;
+            }
+            if(!threadrunning){
+                ThreadList.clear();
+            }
+            else{
+                return false;
+            }
+        }
         for(int i=0; i<numThreads ; i++) {
-            MonteCarloRunner thread = new MonteCarloRunner(numThreads);
+            MonteCarloRunner thread = new MonteCarloRunner();
             ThreadList.add(thread);
             thread.start();
         }
-        return false;
+        return true;
     }
 
     //Beendet die Berechnung
@@ -59,6 +69,7 @@ public class MonteCarlo implements CalculatePi {
     //Berechnet die gemachten Berechnungsschritte und gibt sie zurück
     @Override
     public int getInternalSteps() {
+        //todo Integer Overflow Exception
         int steps=0;
         //Addiert die gemachten Versuche der einzelnen Threads
         for (MonteCarloRunner thread:ThreadList) {

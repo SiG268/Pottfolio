@@ -1,5 +1,7 @@
 package Main;
 
+import Exceptions.IntegerOverflowException;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -33,7 +35,12 @@ public abstract class PiCalculationThread extends Thread{
         this.STARTINDEX =startIndex;
         this.NUMTHREADS = numThreads;
     }
-
+    public void run() {
+        while(running) {
+            parcialSum = parcialSum.add(CalculateSummand(getIndex()));
+            setIndex(getIndex() + NUMTHREADS);
+        }
+    }
     //Abstracte Methode zur Berechnung des Summenglieds aus dem Index
     //wird in der Kindklasse implementiert
     public abstract BigDecimal CalculateSummand(int index);

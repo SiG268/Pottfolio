@@ -23,14 +23,4 @@ public class LeibnizRunner extends PiCalculationThread {
         return summand;
     }
 
-    //TO-DO des Threads
-    //Erhöht die Teilsumme um den nächsten Summanden
-    //Erhöht den Index um NUMTHREADS
-    @Override
-    public void run(){
-        while(running == true) {
-            parcialSum = parcialSum.add(CalculateSummand(getIndex()));
-            setIndex(getIndex() + NUMTHREADS);
-        }
-    }
 }

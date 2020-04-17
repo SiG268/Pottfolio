@@ -1,5 +1,8 @@
 package Main;
 
+import Euler.Euler;
+import Euler.EulerRunner;
+import Exceptions.IntegerOverflowException;
 import MonteCarlo.MonteCarlo;
 
 import java.math.BigDecimal;
@@ -7,7 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     //Konstanten
-    public static final int MAX_PRECISION = 5;
+    public static final int MAX_PRECISION = 10;
+    public static final BigDecimal OVERFLOW_INT = new BigDecimal("2147483648");
 
     //Delaymethode
     // Erhält Einheit und länge des delays. Wartet für die gewählte Zeit
@@ -19,9 +23,13 @@ public class Main {
         }
     }
 
+
     /*Vergleicht zwei BigDecimal Zahlen und gibt die Anzahl der gleichen Nachkommastellen
     (bis die erste Stelle sich unterscheidet) zurück*/
-    public static int precision(BigDecimal res, BigDecimal newRes){
+    public static int precision(BigDecimal res, BigDecimal newRes) throws IntegerOverflowException{
+        if(res.compareTo(OVERFLOW_INT)!=-1||newRes.compareTo(OVERFLOW_INT)!=-1){
+            throw new IntegerOverflowException("Can´t evaluate pi precision");
+        }
         //Returnwert. Wenn die Zahlen vor dem Komma nicht übereinstimmen return -1
         int precReturn= -1;
         //numerals ist die kleinere Anzahl an Nachkommastellen der Übergabeparameter
@@ -36,8 +44,6 @@ public class Main {
             //Subtrahiert die Zahl vor dem Komma (aus X.YZ wird 0.YZ)
             res= res.subtract(new BigDecimal(res.intValue()));
             newRes= newRes.subtract(new BigDecimal(newRes.intValue()));
-            //todo throw IntegerOverflow RuntimeException
-
 
             //Verschiebt den Dezimalpunkt eine Stelle nach Rechts
             //die erste Nachkommastelle steht jetzt vor dem Komma
@@ -62,16 +68,22 @@ public class Main {
         CalculatePi pi = new MonteCarlo();
         //Startnachricht und Start der Berechnung
         System.out.println("Start: " + pi.getMethodName());
-        pi.startCalculation(8);
+        pi.startCalculation(250);
 
         int prec = 0;
         BigDecimal result = BigDecimal.ZERO;
         long timeStart = System.currentTimeMillis();
-        int i = 0;
         while(prec < MAX_PRECISION){
-            someDelay(TimeUnit.SECONDS,1);
+            someDelay(TimeUnit.MICROSECONDS,1);
             BigDecimal newResult = pi.getValue();
-            int newPrec = precision(result,newResult);
+            int newPrec = 0;
+            try {
+                newPrec = precision(result,newResult);
+            } catch (IntegerOverflowException e) {
+                e.printStackTrace();
+                System.out.println("pi (" + newPrec + "): " + newResult);
+                break;
+            }
             if(newPrec != prec){
                 System.out.println("pi (" + newPrec + "): " + newResult);
                 prec = newPrec;
