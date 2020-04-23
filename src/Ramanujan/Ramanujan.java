@@ -1,6 +1,7 @@
 package Ramanujan;
 
 import Euler.EulerRunner;
+import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
 
 import java.math.BigDecimal;
@@ -60,11 +61,14 @@ public class Ramanujan implements CalculatePi {
 
     //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
-    public BigDecimal getValue() {
+    public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal sum = BigDecimal.ZERO;
         //Addiert die Teilsummen der Threads zusammen
         for(RamanujanRunner r : ThreadList){
             sum = sum.add(r.parcialSum);
+        }
+        if(sum.equals(BigDecimal.ZERO)){
+            throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
         //Summe (der Teilsummen) * Koeffizient
         sum = sum.multiply(COEFFICIENT);

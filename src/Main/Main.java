@@ -1,16 +1,17 @@
 package Main;
 
-import Euler.Euler;
-import Euler.EulerRunner;
+
 import Exceptions.IntegerOverflowException;
+import Exceptions.NoCalculationExecutedException;
 import MonteCarlo.MonteCarlo;
+import Ramanujan.Ramanujan;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
     //Konstanten
-    public static final int MAX_PRECISION = 10;
+    public static final int MAX_PRECISION = 12;
     public static final BigDecimal OVERFLOW_INT = new BigDecimal("2147483648");
 
     //Delaymethode
@@ -65,17 +66,23 @@ public class Main {
 
     //TO-DO des Programms
     public static void main(String[] args) {
-        CalculatePi pi = new MonteCarlo();
+        CalculatePi pi = new Ramanujan();
         //Startnachricht und Start der Berechnung
         System.out.println("Start: " + pi.getMethodName());
-        pi.startCalculation(250);
+        pi.startCalculation();
 
         int prec = 0;
         BigDecimal result = BigDecimal.ZERO;
         long timeStart = System.currentTimeMillis();
         while(prec < MAX_PRECISION){
-            someDelay(TimeUnit.MICROSECONDS,1);
-            BigDecimal newResult = pi.getValue();
+            someDelay(TimeUnit.MILLISECONDS,1);
+            BigDecimal newResult = BigDecimal.ZERO;
+            try {
+                newResult = pi.getValue();
+            } catch (NoCalculationExecutedException e) {
+                e.printStackTrace();
+                break;
+            }
             int newPrec = 0;
             try {
                 newPrec = precision(result,newResult);

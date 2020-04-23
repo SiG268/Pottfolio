@@ -1,4 +1,5 @@
 package MonteCarlo;
+import Exceptions.NoCalculationExecutedException;
 import Leibniz.LeibnizRunner;
 import Main.CalculatePi;
 import java.math.BigDecimal;
@@ -52,7 +53,7 @@ public class MonteCarlo implements CalculatePi {
 
     //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
-    public BigDecimal getValue() {
+    public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal pi;
         BigDecimal treffer=BigDecimal.ZERO;
         BigDecimal versuche=BigDecimal.ZERO;
@@ -60,6 +61,9 @@ public class MonteCarlo implements CalculatePi {
         for (MonteCarloRunner thread:ThreadList) {
             treffer = treffer.add(new BigDecimal(thread.getTreffer()));
             versuche= versuche.add(new BigDecimal(thread.getVersuche()));
+        }
+        if(versuche.equals(BigDecimal.ZERO)){
+            throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
         //Es gilt Treffer / Versuche = pi/4 -> pi = treffer/versuche * 4
         pi=treffer.divide(versuche, MC).multiply(new BigDecimal("4"));

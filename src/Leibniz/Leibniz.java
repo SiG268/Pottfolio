@@ -1,6 +1,7 @@
 package Leibniz;
 
 import Euler.EulerRunner;
+import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
 
 import java.math.BigDecimal;
@@ -55,11 +56,14 @@ public class Leibniz implements CalculatePi {
 
     //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
-    public BigDecimal getValue() {
+    public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal pi = BigDecimal.ZERO;
         //Addiert die Teilsummen der Threads zusammen
         for(LeibnizRunner r : ThreadList){
             pi = pi.add(r.parcialSum);
+        }
+        if(pi.equals(BigDecimal.ZERO)){
+            throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
         //Teilsummen ergeben pi/4 -> Auflösen nach Pi
         pi = pi.multiply(new BigDecimal("4"));
