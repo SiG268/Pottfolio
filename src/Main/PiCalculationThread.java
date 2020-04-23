@@ -6,42 +6,75 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+/**
+ * Abstrakte Elternklasse von Euler-,Ramanujan- und LeibnizRunner
+ */
 public abstract class PiCalculationThread extends Thread{
     //Konstanten
+     /** {@link #MC} -  Der bei der Berechnung verwendete MathContext*/
     public final MathContext MC = new MathContext(1000, RoundingMode.HALF_EVEN);
+
+    /** {@link #STARTINDEX} -  Start Index von dem Thread welcher im Konstruktor übergeben wird*/
     public final int STARTINDEX;
-    public final int NUMTHREADS;
 
-    //Kontrollvariable um den Thread anzuhalten
-    public volatile boolean running = true;
+    /** {@link #NUMTHREADS}  - Anzahl der Threads welcher vom Konstruktor gesetzt wird*/
+    public final BigDecimal NUMTHREADS;
 
-    //Zwischenspeicher für die Teilsumme (Ergebnis) des Threads
+
+    /**Ein-/Ausschalter für den Thread */
+    public boolean running = true;
+
+    /** Teilendergebnis vom Thread*/
     public BigDecimal parcialSum = BigDecimal.ZERO;
+    /**
+     * Index welcher bei der Berechnung der Einzelnen Summanten verwendet wird
+     * Dieser wird von der run Methode am Ende increment
+     */
+    private BigDecimal index;
 
-    //Fortlaufender Index, wird in run() erhöht
-    private int index;
-
-    //getter und setter
-    public int getIndex() {
+    /**
+     * Getter vom Index
+     * @return Liefert den Wert vom Index zurück
+     */
+    public BigDecimal getIndex() {
         return index;
     }
-    public void setIndex(int index) {
+
+    /**
+     * Setzt den Wert vom Index auf den Wert vom Übergabeparameter
+     * @param index BigDecimal welcher auf den Index gesetzt wird
+     */
+    public void setIndex(BigDecimal index) {
         this.index = index;
     }
 
-    //Allgemeiner Constructor, der Index, STARTINDEX und NUMTHREADS initialisiert
+
+    /**
+     * Konstruktor welcher den StartIndex und die Thread Anzahl festlegt
+     * @param startIndex
+     * @param numThreads
+     */
     public PiCalculationThread(int startIndex, int numThreads){
-        this.index = startIndex;
+        this.index = new BigDecimal(startIndex);
         this.STARTINDEX =startIndex;
-        this.NUMTHREADS = numThreads;
+        this.NUMTHREADS = new BigDecimal(numThreads);
     }
+
+    /**
+     * Berechnet den nächsten Summanten und addiert diesen zum Teilendergebnis des Threads
+     * Incrementiert den Index um die Anzahl an Threads
+     */
     public void run() {
         while(running) {
             parcialSum = parcialSum.add(CalculateSummand(getIndex()));
-            setIndex(getIndex() + NUMTHREADS);
+            setIndex(getIndex().add(NUMTHREADS));
         }
     }
-    //Abstracte Methode zur Berechnung des Summenglieds aus dem Index
-    //wird in der Kindklasse implementiert
-    public abstract BigDecimal CalculateSummand(int index);
+
+    /**
+     * Summantenberechnung für die einzelnen Threads
+     * @param index Index des zu berechnenden Summanten
+     * @return den berechneten Summanten
+     */
+    public abstract BigDecimal CalculateSummand(BigDecimal index);
 }

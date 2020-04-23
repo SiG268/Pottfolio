@@ -3,58 +3,71 @@ package Ramanujan;
 import Main.PiCalculationThread;
 import java.math.BigDecimal;
 
+/**
+ * Threadklasse des Ramanujan Approximations Verfahrens
+ */
 public class RamanujanRunner extends PiCalculationThread {
     //Konstanten
     public final BigDecimal NUM1103 = new BigDecimal(1103);
+    public final BigDecimal NUM26390 = new BigDecimal(26390);
     public final BigDecimal NUM396 = new BigDecimal(396);
     //Zwischenspeicher für Fakultätswerte
+    /**{@link #bufferFactorial} - Buffer für die Fakultätsberechnung*/
     private BigDecimal bufferFactorial = BigDecimal.ONE;
+    /**{@link #bufferFactorial4} - Buffer für die Fakultätsberechnung*/
     private BigDecimal bufferFactorial4 = BigDecimal.ONE;
 
-    //Constructor matches SuperConstructor
+
+    /**
+     * Konstruktor<br/>
+     * Ruft Superkonstruktor von {@link PiCalculationThread} auf
+     * @param startIndex Start Index
+     * @param numThreads Anzahl an Threads
+     */
     public RamanujanRunner(int startIndex, int numThreads){
         super(startIndex, numThreads);
     }
 
-    //Aktualisiert die Fakultätswerte auf den aktuellen Index
-    public void updateFactorial(){
+    /**
+     * Berechnet die Fakultät für n und 4n
+     */
+    private void updateFactorial(){
         //Überprüft ob die Methode das erste Mal ausgeführt wird (Startindex ist immer kleiner als Threadzahl)
         //Es gilt für n > k: n! = k! * (k+1)*...*(n)
         // (k+1) bis n 'fehlen' in der Berechnung
         //Beim ersten Aufruf -> else
-        if(getIndex()- NUMTHREADS >=0) {
+        if(getIndex().subtract(NUMTHREADS).compareTo(BigDecimal.ZERO)!=-1) {
             //Multipliziert den FakultätsBuffer mit den 'fehlenden' Zahlen
-            for (int i = getIndex(); i > (getIndex() - NUMTHREADS); i--) {
+            for (int i = getIndex().intValue(); i > (getIndex().subtract(NUMTHREADS)).intValue(); i--) {
                 bufferFactorial = bufferFactorial.multiply(new BigDecimal(i));
             }
             //Multipliziert den FakultätsBuffer für 4n mit den 'fehlenden' Zahlen
-            for (int i = (4 * getIndex()); i > ((getIndex() - NUMTHREADS) * 4); i--) {
+            for (int i = getIndex().intValue()*4; i > (getIndex().subtract(NUMTHREADS)).intValue()*4; i--) {
                 bufferFactorial4 = bufferFactorial4.multiply(new BigDecimal(i));
             }
 
         }else{
             //Beim ersten Ausführen
             //Berechnet die Fakultät mit n! = n*(n-1)*...*1
-            for (int i = getIndex(); i > 0; i--) {
+            for (int i = getIndex().intValue(); i > 0; i--) {
                 bufferFactorial = bufferFactorial.multiply(new BigDecimal(i));
             }
             //Berechnet die Fakultät mit 4n! = 4n*(4n-1)*...*1
-            for (int i = (4 * getIndex()); i > 0; i--) {
+            for (int i = (4 * getIndex().intValue()); i > 0; i--) {
                 bufferFactorial4 = bufferFactorial4.multiply(new BigDecimal(i));
             }
         }
     }
 
-    //Berechnet den Summanden für einen Index
     @Override
-    public BigDecimal CalculateSummand(int index){
+    public BigDecimal CalculateSummand(BigDecimal index){
         //Aktualisiert die Fakultätswerte auf den aktuellen Index
         updateFactorial();
         //Berechnet den Zähler
-        BigDecimal counter = bufferFactorial4.multiply(NUM1103.add(new BigDecimal((26390*index))));
+        BigDecimal counter = bufferFactorial4.multiply(NUM1103.add(NUM26390.multiply(getIndex())));
         //Berechnet den Nenner
         BigDecimal denum = bufferFactorial.pow(4);
-        denum = denum.multiply(NUM396.pow(index*4));
+        denum = denum.multiply(NUM396.pow(getIndex().intValue()*4));
         //Summand = Zähler / Nenner
         BigDecimal summand =counter.divide(denum,super.MC);
         return summand;

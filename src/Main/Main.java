@@ -3,6 +3,7 @@ package Main;
 
 import Exceptions.IntegerOverflowException;
 import Exceptions.NoCalculationExecutedException;
+import Leibniz.Leibniz;
 import MonteCarlo.MonteCarlo;
 import Ramanujan.Ramanujan;
 
@@ -11,11 +12,19 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     //Konstanten
+    /**{@link #MAX_PRECISION} Enthält den Wert bis zu welcher Präzision das PI berechnet wird*/
     public static final int MAX_PRECISION = 12;
+
+    /**{@link #OVERFLOW_INT} Wert bei dem der Interger in das negative übergeht*/
     public static final BigDecimal OVERFLOW_INT = new BigDecimal("2147483648");
 
-    //Delaymethode
-    // Erhält Einheit und länge des delays. Wartet für die gewählte Zeit
+    /**
+     * Delaymethode: <br/>
+     * Erhält Einheit und länge des delays. Wartet für die gewählte Zeit
+     * @param unit  Einheit des Delays
+     * @param delay Länge des Delays
+     */
+
     public static void someDelay(TimeUnit unit,int delay){
         try {
             unit.sleep(delay);
@@ -24,7 +33,14 @@ public class Main {
         }
     }
 
-
+    /**
+     * Errechnet die Präzision von zweit übergebenen Werten.Vergleicht zwei BigDecimal Zahlen und gibt die Anzahl der gleichen Nachkommastellen zurück.
+     *
+     * @param res BigDecimal welches verglichen wird
+     * @param newRes BigDecimal welches verglichen wird
+     * @return -1 keine Präzision, 0-n gleichen Nachkommastellen der Übergabeparameter
+     * @throws IntegerOverflowException wird geschmissen wenn die BigDecimals zu groß sind um diese in ein Integer umzuwandeln
+     */
     /*Vergleicht zwei BigDecimal Zahlen und gibt die Anzahl der gleichen Nachkommastellen
     (bis die erste Stelle sich unterscheidet) zurück*/
     public static int precision(BigDecimal res, BigDecimal newRes) throws IntegerOverflowException{
@@ -56,8 +72,13 @@ public class Main {
         return precReturn;
     }
 
+    /**
+     * Berechnet die Anzahl der Nachkommastellen
+     * @param number BigDecimal bei dem die Nachkommastellen berechnet werden sollen
+     * @return int Wert von der Anzahl der Nachkommastellen
+     */
     //Gibt die Anzahl an Nachkommastellen einer BigDecimal zurück
-    public static int getRealPrecision(BigDecimal number){
+    private static int getRealPrecision(BigDecimal number){
         //Schneidet die Nachkommastellen ab
         int preNumerals = number.intValue();
         //return Gesamtstellen - Stellen vor dem Komma
@@ -66,16 +87,16 @@ public class Main {
 
     //TO-DO des Programms
     public static void main(String[] args) {
-        CalculatePi pi = new Ramanujan();
+        CalculatePi pi = new Leibniz();
         //Startnachricht und Start der Berechnung
         System.out.println("Start: " + pi.getMethodName());
-        pi.startCalculation();
+        pi.startCalculation(8);
 
         int prec = 0;
         BigDecimal result = BigDecimal.ZERO;
         long timeStart = System.currentTimeMillis();
         while(prec < MAX_PRECISION){
-            someDelay(TimeUnit.MILLISECONDS,1);
+            someDelay(TimeUnit.SECONDS,5);
             BigDecimal newResult = BigDecimal.ZERO;
             try {
                 newResult = pi.getValue();

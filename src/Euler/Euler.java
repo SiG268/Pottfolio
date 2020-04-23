@@ -1,33 +1,28 @@
 package Euler;
 
-import Exceptions.IntegerOverflowException;
 import Exceptions.NoCalculationExecutedException;
-import Leibniz.LeibnizRunner;
 import Main.CalculatePi;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+/**
+ * PI Kalkulationsklasse des Euler Approximations Verfahrens
+ */
 public class Euler implements CalculatePi {
     //Konstanten
+    /** {@link #MC} -  Der bei der Berechnung verwendete MathContext*/
     public final MathContext MC = new MathContext(100, RoundingMode.HALF_EVEN);
-    //ArrayList zur Threadverwaltung
+    /** {@link #ThreadList} - Liste welche die Threads enthält um diese zu Verwalten*/
     private final ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
-    //Platzhalter für EulerRunner Initialisierung in startCalculation
-    //maybe delete this
-    public EulerRunner r;
 
-    //startet die Single Thread Berechnung
-    //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
+
     @Override
     public boolean startCalculation() {
         return startCalculation(1);
     }
 
-    //startet die multi Thread Berechnung
-    //Erhöht den Startindex bei jedem Durchgang der for Schleife
-    //Stellt damit sicher das jeder Thread andere Summanden berechnet -> Dopplungen verhindern
     @Override
     public boolean startCalculation(int numThreads) {
         if(ThreadList.size()>0){
@@ -43,21 +38,19 @@ public class Euler implements CalculatePi {
             }
         }
         for(int i = 1;i<=numThreads;i++) {
-            r = new EulerRunner(i,numThreads);
-            ThreadList.add(r);
-            r.start();
+            EulerRunner t = new EulerRunner(i,numThreads);
+            ThreadList.add(t);
+            t.start();
         }
         return true;
     }
 
-    //Beendet die Berechnung
     @Override
     public void stopCalculation() {
         for(EulerRunner t : ThreadList)
             t.running = false;
     }
 
-    //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
     public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal pi = BigDecimal.ZERO;
@@ -74,7 +67,6 @@ public class Euler implements CalculatePi {
         return pi;
     }
 
-    //Berechnet die gemachten Berechnungsschritte und gibt sie zurück
     @Override
     public int getInternalSteps() {
         int internalSteps = 0;
@@ -82,12 +74,11 @@ public class Euler implements CalculatePi {
         for(EulerRunner r : ThreadList){
             //Es gilt: Index = STARTINDEX+NUMTHREADS*Rechenschritte
             // => Schritte = (Index-STARTINDEX)/NUMTHREADS
-            internalSteps += (r.getIndex()-r.STARTINDEX)/r.NUMTHREADS;
+            internalSteps += (r.getIndex().intValue()-r.STARTINDEX)/r.NUMTHREADS.intValue();
         }
         return internalSteps;
     }
 
-    //Gibt den Namen der verwendeten Berechnungsmethode aus
     @Override
     public String getMethodName() {
         return "Euler series approximation";

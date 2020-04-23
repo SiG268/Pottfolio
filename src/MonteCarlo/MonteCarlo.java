@@ -1,6 +1,5 @@
 package MonteCarlo;
 import Exceptions.NoCalculationExecutedException;
-import Leibniz.LeibnizRunner;
 import Main.CalculatePi;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -9,18 +8,16 @@ import java.util.ArrayList;
 
 public class MonteCarlo implements CalculatePi {
     //Konstanten
+    /**{@link #MC} -  Der bei der Berechnung verwendete MathContext*/
     public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
-    //ArrayList zur Threadverwaltung
+    /**{@link #ThreadList} - Liste welche die Threads enthält um diese zu Verwalten*/
     public final ArrayList<MonteCarloRunner> ThreadList = new ArrayList<MonteCarloRunner>();
 
-    //startet die Single Thread Berechnung
-    //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
     @Override
     public boolean startCalculation() {
         return startCalculation(1);
     }
 
-    //startet die multi Thread Berechnung
     @Override
     public boolean startCalculation(int numThreads) {
         if(ThreadList.size()>0){
@@ -43,7 +40,6 @@ public class MonteCarlo implements CalculatePi {
         return true;
     }
 
-    //Beendet die Berechnung
     @Override
     public void stopCalculation() {
         for (MonteCarloRunner thread:ThreadList) {
@@ -51,7 +47,6 @@ public class MonteCarlo implements CalculatePi {
         }
     }
 
-    //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
     public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal pi;
@@ -70,10 +65,8 @@ public class MonteCarlo implements CalculatePi {
         return pi;
     }
 
-    //Berechnet die gemachten Berechnungsschritte und gibt sie zurück
     @Override
     public int getInternalSteps() {
-        //todo Integer Overflow Exception
         int steps=0;
         //Addiert die gemachten Versuche der einzelnen Threads
         for (MonteCarloRunner thread:ThreadList) {
@@ -82,7 +75,6 @@ public class MonteCarlo implements CalculatePi {
         return steps;
     }
 
-    //Gibt den Namen der verwendeten Berechnungsmethode aus
     @Override
     public String getMethodName() {
         return "Monte-Carlo approximation";

@@ -1,35 +1,29 @@
 package Ramanujan;
 
-import Euler.EulerRunner;
 import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+/**
+ * PI Kalkulationsklasse des Ramanujan Approximations Verfahrens
+ */
 public class Ramanujan implements CalculatePi {
-    //Konstanten
-    public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
-    //ArrayList zur Threadverwaltung
-    public final ArrayList<RamanujanRunner> ThreadList = new ArrayList<RamanujanRunner>();
-    //Koeffizient vor der Summe
-    public final BigDecimal COEFFICIENT = new BigDecimal(8).sqrt(MC).divide(new BigDecimal(9801), MC);
-    //Platzhalter für EulerRunner Initialisierung in startCalculation
-    //maybe delete this
-    public RamanujanRunner r;
 
-    //startet die Single Thread Berechnung
-    //Thread erzeugen -> zur ThreadList hinzufügen -> Thread starten
+    /** {@link #MC} -  Der bei der Berechnung verwendete MathContext*/
+    public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
+    /**{@link #ThreadList} - Liste welche die Threads enthält um diese zu Verwalten*/
+    public final ArrayList<RamanujanRunner> ThreadList = new ArrayList<RamanujanRunner>();
+    /**{@link #COEFFICIENT} - Koeffizient vor der Summe*/
+    public final BigDecimal COEFFICIENT = new BigDecimal(8).sqrt(MC).divide(new BigDecimal(9801), MC);
+
     @Override
     public boolean startCalculation() {
         return startCalculation(1);
     }
 
-    //startet die multi Thread Berechnung
-    //Erhöht den Startindex bei jedem Durchgang der for Schleife
-    //Stellt damit sicher das jeder Thread andere Summanden berechnet -> Dopplungen verhindern
     @Override
     public boolean startCalculation(int numThreads) {
         if(ThreadList.size()>0){
@@ -52,20 +46,18 @@ public class Ramanujan implements CalculatePi {
         return true;
     }
 
-    //Beendet die Berechnung
     @Override
     public void stopCalculation() {
         for(RamanujanRunner t : ThreadList)
             t.running = false;
         }
 
-    //Berechnet den aktuellen Wert für Pi und gibt diesen zurück
     @Override
     public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal sum = BigDecimal.ZERO;
         //Addiert die Teilsummen der Threads zusammen
-        for(RamanujanRunner r : ThreadList){
-            sum = sum.add(r.parcialSum);
+        for(RamanujanRunner t : ThreadList){
+            sum = sum.add(t.parcialSum);
         }
         if(sum.equals(BigDecimal.ZERO)){
             throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
@@ -77,21 +69,18 @@ public class Ramanujan implements CalculatePi {
         return pi;
     }
 
-
-    //Berechnet die gemachten Berechnungsschritte und gibt sie zurück
     @Override
     public int getInternalSteps() {
         int internalSteps = 0;
         //Addiert die internalSteps der einzelnen Threads
-        for (RamanujanRunner r : ThreadList) {
+        for (RamanujanRunner t : ThreadList) {
             //Es gilt: Index = STARTINDEX+NUMTHREADS*Rechenschritte
             // => Schritte = (Index-STARTINDEX)/NUMTHREADS
-            internalSteps += (r.getIndex() - r.STARTINDEX) / r.NUMTHREADS;
+            internalSteps += (t.getIndex().intValue() - t.STARTINDEX) / t.NUMTHREADS.intValue();
         }
         return internalSteps;
     }
 
-    //Gibt den Namen der verwendeten Berechnungsmethode aus
     @Override
     public String getMethodName() {
         return "Ramanujan series approximation";
