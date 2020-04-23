@@ -5,11 +5,11 @@ import java.math.RoundingMode;
 
 public class Point {
     //Konstanten
-    /**{@link #MC} -  Der bei der Berechnung verwendete MathContext*/
+    /** Der bei der Berechnung verwendete MathContext*/
     public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
-    /**{@link #x} -  X Koordinate vom Punkt*/
+    /** X Koordinate vom Punkt*/
     private BigDecimal x;
-    /**{@link #y} -  Y Koordinate vom Punkt*/
+    /** Y Koordinate vom Punkt*/
     private BigDecimal y;
 
     //getter und setter

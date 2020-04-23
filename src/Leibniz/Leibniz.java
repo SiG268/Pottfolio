@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * PI Kalkulationsklasse des Leibniz Approximations Verfahrens
  */
 public class Leibniz implements CalculatePi {
-    /** {@link #ThreadList} - Liste welche die Threads enthält um diese zu Verwalten*/
+    /**Liste welche die Threads enthält um diese zu Verwalten*/
     public final ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
 
     @Override

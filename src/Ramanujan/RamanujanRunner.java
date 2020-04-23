@@ -12,9 +12,9 @@ public class RamanujanRunner extends PiCalculationThread {
     public final BigDecimal NUM26390 = new BigDecimal(26390);
     public final BigDecimal NUM396 = new BigDecimal(396);
     //Zwischenspeicher für Fakultätswerte
-    /**{@link #bufferFactorial} - Buffer für die Fakultätsberechnung*/
+    /** Buffer für die Fakultätsberechnung*/
     private BigDecimal bufferFactorial = BigDecimal.ONE;
-    /**{@link #bufferFactorial4} - Buffer für die Fakultätsberechnung*/
+    /** Buffer für die Fakultätsberechnung*/
     private BigDecimal bufferFactorial4 = BigDecimal.ONE;
 
 
@@ -68,9 +68,8 @@ public class RamanujanRunner extends PiCalculationThread {
         //Berechnet den Nenner
         BigDecimal denum = bufferFactorial.pow(4);
         denum = denum.multiply(NUM396.pow(getIndex().intValue()*4));
-        //Summand = Zähler / Nenner
-        BigDecimal summand =counter.divide(denum,super.MC);
-        return summand;
+        //return Zähler / Nenner
+        return counter.divide(denum,super.MC);
     }
 
 }

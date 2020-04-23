@@ -6,9 +6,9 @@ public class MonteCarloRunner extends Thread {
     /**Ein-/Ausschalter für den Thread */
     public boolean running = true;
 
-    /** {@link #versuche} - Zähler für die Versuche*/
+    /**Zähler für die Versuche*/
     private int versuche;
-    /** {@link #treffer} - Zähler für die Treffer*/
+    /**Zähler für die Treffer*/
     private int treffer;
 
     //getter und setter
@@ -41,7 +41,7 @@ public class MonteCarloRunner extends Thread {
 
     /**
      * Erzeugt einen random {@link Point}
-     * @return
+     * @return Gibt einen {@link Point} zurück
      */
     private Point randomPoint(){
         BigDecimal x = BigDecimal.valueOf(Math.random());
