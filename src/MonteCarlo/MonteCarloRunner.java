@@ -3,12 +3,12 @@ package MonteCarlo;
 import java.math.BigDecimal;
 
 public class MonteCarloRunner extends Thread {
-    /**Ein-/Ausschalter für den Thread */
+    /**Ein-/Ausschalter fuer den Thread */
     public boolean running = true;
 
-    /**Zähler für die Versuche*/
+    /**Zaehler fuer die Versuche*/
     private int versuche;
-    /**Zähler für die Treffer*/
+    /**Zaehler fuer die Treffer*/
     private int treffer;
 
     //getter und setter
@@ -37,11 +37,11 @@ public class MonteCarloRunner extends Thread {
         setVersuche(0);
     }
 
-    //Erzeugt einen zufälligen Punkt und gibt ihn zurück
+    //Erzeugt einen zufaelligen Punkt und gibt ihn zurueck
 
     /**
      * Erzeugt einen random {@link Point}
-     * @return Gibt einen {@link Point} zurück
+     * @return Gibt einen {@link Point} zurueck
      */
     private Point randomPoint(){
         BigDecimal x = BigDecimal.valueOf(Math.random());
@@ -52,16 +52,16 @@ public class MonteCarloRunner extends Thread {
     //TO-DO des Threads
 
     /**
-     * Run Methode des Threads<br/>
+     * Run Methode des Threads
      * Erzeugt einen Random {@link Point} und schaut ob dieser ein Treffer ist oder nicht.
      */
     public void run(){
         while(running) {
-            //Erzeugt einen zufälligen Punkt
+            //Erzeugt einen zufaelligen Punkt
             Point random = randomPoint();
-            //Wenn die Distanz zwischen Mittelpunkt und erzeugtem Punkt <=1 (also !(>1) erhöhe Trefferzähler
+            //Wenn die Distanz zwischen Mittelpunkt und erzeugtem Punkt <=1 (also !(>1) erhoehe Trefferzaehler
             treffer+=random.eval();
-            //Erhöhe Versuchszähler
+            //Erhoehe Versuchszaehler
             this.versuche++;
         }
 

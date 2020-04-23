@@ -14,7 +14,7 @@ public class Euler implements CalculatePi {
     //Konstanten
     /**Der bei der Berechnung verwendete MathContext*/
     public final MathContext MC = new MathContext(100, RoundingMode.HALF_EVEN);
-    /**Liste welche die Threads enthält um diese zu Verwalten*/
+    /**Liste welche die Threads enthaelt um diese zu Verwalten*/
     private final ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
 
 
@@ -61,7 +61,7 @@ public class Euler implements CalculatePi {
         if(pi.equals(BigDecimal.ZERO)){
             throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
-        //Teilsummen ergeben (pi^2)/6 -> Auflösen nach Pi
+        //Teilsummen ergeben (pi^2)/6 -> Aufloesen nach Pi
         pi = pi.multiply(new BigDecimal(6));
         pi = pi.sqrt(MC);
         return pi;

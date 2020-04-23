@@ -30,7 +30,7 @@ public class Point {
     }
 
     /**
-     * Default Konstruktor<br/>
+     * Default Konstruktor<br>
      * Erzeugt einen Punkt an der Position x=0,y=0
      */
     public Point(){
@@ -39,8 +39,8 @@ public class Point {
     }
 
     /**
-     * Konstrukter<br/>
-     * Erzeugt einen Punkt mit den Übergabeparamtern
+     * Konstrukter<br>
+     * Erzeugt einen Punkt mit den uebergabeparamtern
      * @param x X Koordinate
      * @param y Y Koordinate
      */
@@ -51,7 +51,7 @@ public class Point {
     }
 
     /**
-     * Ermöglicht es den Punkt als String auszugeben
+     * Ermoeglicht es den Punkt als String auszugeben
      * @return "X: Value, Y: Value"
      */
     @Override
@@ -62,7 +62,7 @@ public class Point {
 
     /**
      * Errechnet den Abstand zum Punkt: x=0, y=0
-     * @return (1, wenn Abstand<=1) (0, wenn Abstand>1)
+     * @return (1, wenn Abstand kleiner gleich 1) (0, wenn Abstand groesser 1)
      */
     public int eval(){
         BigDecimal hypo= this.getX().pow(2).add(this.getY().pow(2));

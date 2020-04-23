@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class EulerRunner extends PiCalculationThread {
 
     /**
-     * Konstruktor<br/>
+     * Konstruktor<br>
      * Ruft Superkonstruktor von {@link PiCalculationThread} auf
      * @param startIndex Start Index
      * @param numThreads Anzahl an Threads
