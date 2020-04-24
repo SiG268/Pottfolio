@@ -12,17 +12,17 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     //Konstanten
-    /**{@link #MAX_PRECISION} Enthält den Wert bis zu welcher Präzision das PI berechnet wird*/
+    /**{@link #MAX_PRECISION} Enthaelt den Wert bis zu welcher Praezision das PI berechnet wird*/
     public static final int MAX_PRECISION = 12;
 
-    /**{@link #OVERFLOW_INT} Wert bei dem der Interger in das negative übergeht*/
+    /**{@link #OVERFLOW_INT} Wert bei dem der Interger in das negative uebergeht*/
     public static final BigDecimal OVERFLOW_INT = new BigDecimal("2147483648");
 
     /**
-     * Delaymethode: <br/>
-     * Erhält Einheit und länge des delays. Wartet für die gewählte Zeit
+     * Delaymethode: <br>
+     * Erhaelt Einheit und laenge des delays. Wartet fuer die gewaehlte Zeit
      * @param unit  Einheit des Delays
-     * @param delay Länge des Delays
+     * @param delay Laenge des Delays
      */
 
     public static void someDelay(TimeUnit unit,int delay){
@@ -34,25 +34,25 @@ public class Main {
     }
 
     /**
-     * Errechnet die Präzision von zweit übergebenen Werten.Vergleicht zwei BigDecimal Zahlen und gibt die Anzahl der gleichen Nachkommastellen zurück.
+     * Errechnet die Praezision von zweit uebergebenen Werten.Vergleicht zwei BigDecimal Zahlen und gibt die Anzahl der gleichen Nachkommastellen zurueck.
      *
      * @param res BigDecimal welches verglichen wird
      * @param newRes BigDecimal welches verglichen wird
-     * @return -1 keine Präzision, 0-n gleichen Nachkommastellen der Übergabeparameter
-     * @throws IntegerOverflowException wird geschmissen wenn die BigDecimals zu groß sind um diese in ein Integer umzuwandeln
+     * @return -1 keine Praezision, 0-n gleichen Nachkommastellen der uebergabeparameter
+     * @throws IntegerOverflowException wird geschmissen wenn die BigDecimals zu gross sind um diese in ein Integer umzuwandeln
      */
     /*Vergleicht zwei BigDecimal Zahlen und gibt die Anzahl der gleichen Nachkommastellen
-    (bis die erste Stelle sich unterscheidet) zurück*/
+    (bis die erste Stelle sich unterscheidet) zurueck*/
     public static int precision(BigDecimal res, BigDecimal newRes) throws IntegerOverflowException{
         if(res.compareTo(OVERFLOW_INT)!=-1||newRes.compareTo(OVERFLOW_INT)!=-1){
             throw new IntegerOverflowException("Can´t evaluate pi precision");
         }
-        //Returnwert. Wenn die Zahlen vor dem Komma nicht übereinstimmen return -1
+        //Returnwert. Wenn die Zahlen vor dem Komma nicht uebereinstimmen return -1
         int precReturn= -1;
-        //numerals ist die kleinere Anzahl an Nachkommastellen der Übergabeparameter
+        //numerals ist die kleinere Anzahl an Nachkommastellen der uebergabeparameter
         int numerals = Math.min(getRealPrecision(res),getRealPrecision(newRes));
 
-        //Vergleichsschleife. Bricht ab wenn die Nachkommastellen der 'kürzeren' Zahl überprüft wurden
+        //Vergleichsschleife. Bricht ab wenn die Nachkommastellen der 'kuerzeren' Zahl ueberprueft wurden
         while(numerals > precReturn){
             //Vergleich der Vorkomma Zahl
             if(res.intValue()!=newRes.intValue()){
@@ -66,7 +66,7 @@ public class Main {
             //die erste Nachkommastelle steht jetzt vor dem Komma
             res = res.movePointRight(1);
             newRes = newRes.movePointRight(1);
-            //erhöhe den Returnwert
+            //erhoehe den Returnwert
             precReturn++;
         }
         return precReturn;
@@ -77,7 +77,7 @@ public class Main {
      * @param number BigDecimal bei dem die Nachkommastellen berechnet werden sollen
      * @return int Wert von der Anzahl der Nachkommastellen
      */
-    //Gibt die Anzahl an Nachkommastellen einer BigDecimal zurück
+    //Gibt die Anzahl an Nachkommastellen einer BigDecimal zurueck
     private static int getRealPrecision(BigDecimal number){
         //Schneidet die Nachkommastellen ab
         int preNumerals = number.intValue();

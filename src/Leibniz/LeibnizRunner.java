@@ -8,12 +8,12 @@ import java.math.BigDecimal;
 public class LeibnizRunner extends PiCalculationThread {
     private static final BigDecimal TWO = new BigDecimal(2);
     /**
-     * Konstruktor<br/>
+     * Konstruktor<br>
      * Ruft Superkonstruktor von {@link PiCalculationThread} auf
      * @param startIndex Start Index
      * @param numThreads Anzahl an Threads
      */
-    //Index und numThreads werden verändert, da CalculateSummand ein Summandenpaar berechnet
+    //Index und numThreads werden veraendert, da CalculateSummand ein Summandenpaar berechnet
     public LeibnizRunner(int startIndex, int numThreads) {
         super(2*startIndex-1, 2*numThreads);
     }

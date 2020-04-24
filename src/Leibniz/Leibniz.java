@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * PI Kalkulationsklasse des Leibniz Approximations Verfahrens
  */
 public class Leibniz implements CalculatePi {
-    /** {@link #ThreadList} - Liste welche die Threads enthält um diese zu Verwalten*/
+    /**Liste welche die Threads enthaelt um diese zu Verwalten*/
     public final ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
 
     @Override
@@ -57,7 +57,7 @@ public class Leibniz implements CalculatePi {
         if(pi.equals(BigDecimal.ZERO)){
             throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
-        //Teilsummen ergeben pi/4 -> Auflösen nach Pi
+        //Teilsummen ergeben pi/4 -> Aufloesen nach Pi
         pi = pi.multiply(new BigDecimal("4"));
         return pi;
     }

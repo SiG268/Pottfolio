@@ -1,7 +1,5 @@
 package Main;
 
-import Exceptions.IntegerOverflowException;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -11,17 +9,17 @@ import java.math.RoundingMode;
  */
 public abstract class PiCalculationThread extends Thread{
     //Konstanten
-     /** {@link #MC} -  Der bei der Berechnung verwendete MathContext*/
+     /**Der bei der Berechnung verwendete MathContext*/
     public final MathContext MC = new MathContext(1000, RoundingMode.HALF_EVEN);
 
-    /** {@link #STARTINDEX} -  Start Index von dem Thread welcher im Konstruktor übergeben wird*/
+    /**Start Index von dem Thread welcher im Konstruktor uebergeben wird*/
     public final int STARTINDEX;
 
-    /** {@link #NUMTHREADS}  - Anzahl der Threads welcher vom Konstruktor gesetzt wird*/
+    /**Anzahl der Threads welcher vom Konstruktor gesetzt wird*/
     public final BigDecimal NUMTHREADS;
 
 
-    /**Ein-/Ausschalter für den Thread */
+    /**Ein-/Ausschalter fuer den Thread */
     public boolean running = true;
 
     /** Teilendergebnis vom Thread*/
@@ -34,14 +32,14 @@ public abstract class PiCalculationThread extends Thread{
 
     /**
      * Getter vom Index
-     * @return Liefert den Wert vom Index zurück
+     * @return Liefert den Wert vom Index zurueck
      */
     public BigDecimal getIndex() {
         return index;
     }
 
     /**
-     * Setzt den Wert vom Index auf den Wert vom Übergabeparameter
+     * Setzt den Wert vom Index auf den Wert vom uebergabeparameter
      * @param index BigDecimal welcher auf den Index gesetzt wird
      */
     public void setIndex(BigDecimal index) {
@@ -51,8 +49,8 @@ public abstract class PiCalculationThread extends Thread{
 
     /**
      * Konstruktor welcher den StartIndex und die Thread Anzahl festlegt
-     * @param startIndex
-     * @param numThreads
+     * @param startIndex Start Index
+     * @param numThreads Anzahl der Threads
      */
     public PiCalculationThread(int startIndex, int numThreads){
         this.index = new BigDecimal(startIndex);
@@ -61,7 +59,7 @@ public abstract class PiCalculationThread extends Thread{
     }
 
     /**
-     * Berechnet den nächsten Summanten und addiert diesen zum Teilendergebnis des Threads
+     * Berechnet den naechsten Summanten und addiert diesen zum Teilendergebnis des Threads
      * Incrementiert den Index um die Anzahl an Threads
      */
     public void run() {
@@ -72,7 +70,7 @@ public abstract class PiCalculationThread extends Thread{
     }
 
     /**
-     * Summantenberechnung für die einzelnen Threads
+     * Summantenberechnung fuer die einzelnen Threads
      * @param index Index des zu berechnenden Summanten
      * @return den berechneten Summanten
      */
