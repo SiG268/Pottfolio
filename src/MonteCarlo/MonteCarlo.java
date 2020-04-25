@@ -6,6 +6,10 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+/**
+ * PI Kalkulationsklasse des Monte Carlo Approximations Verfahrens
+ * @deprecated Slow. Replaced by {@link MonteCarloFast}
+ */
 public class MonteCarlo implements CalculatePi {
     //Konstanten
     /** Der bei der Berechnung verwendete MathContext*/

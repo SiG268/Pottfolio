@@ -40,7 +40,7 @@ public class MonteCarloRunnerFast extends Thread {
      * Default Konstruktor
      * Initialisiert Treffer und Versuche mit 0
      */
-    public MonteCarloRunnerFast(){
+    protected MonteCarloRunnerFast(){
         setTreffer(BigDecimal.ZERO);
         setVersuche(BigDecimal.ZERO);
     }

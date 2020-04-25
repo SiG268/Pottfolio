@@ -2,13 +2,15 @@ package MonteCarloFast;
 
 import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
-import MonteCarlo.MonteCarloRunner;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+/**
+ * Threadklasse des Monte Carlo Approximations Verfahrens
+ */
 public class MonteCarloFast implements CalculatePi {
     //Konstanten
     /**Der bei der Berechnung verwendete MathContext*/

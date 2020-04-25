@@ -3,19 +3,22 @@ package Main;
 
 import Exceptions.IntegerOverflowException;
 import Exceptions.NoCalculationExecutedException;
+import Euler.Euler;
 import Leibniz.Leibniz;
 import MonteCarlo.MonteCarlo;
+import MonteCarloFast.MonteCarloFast;
 import Ramanujan.Ramanujan;
+
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
     //Konstanten
-    /**{@link #MAX_PRECISION} Enthaelt den Wert bis zu welcher Praezision das PI berechnet wird*/
+    /**Enthaelt den Wert bis zu welcher Praezision das PI berechnet wird*/
     public static final int MAX_PRECISION = 12;
 
-    /**{@link #OVERFLOW_INT} Wert bei dem der Interger in das negative uebergeht*/
+    /**Wert bei dem der Interger in das negative uebergeht*/
     public static final BigDecimal OVERFLOW_INT = new BigDecimal("2147483648");
 
     /**
@@ -87,7 +90,7 @@ public class Main {
 
     //TO-DO des Programms
     public static void main(String[] args) {
-        CalculatePi pi = new Leibniz();
+        CalculatePi pi = new Euler();
         //Startnachricht und Start der Berechnung
         System.out.println("Start: " + pi.getMethodName());
         pi.startCalculation(8);

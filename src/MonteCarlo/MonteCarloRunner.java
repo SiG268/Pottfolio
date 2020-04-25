@@ -2,6 +2,9 @@ package MonteCarlo;
 
 import java.math.BigDecimal;
 
+/**
+ * Threadklasse des Monte Carlo Approximations Verfahrens
+ */
 public class MonteCarloRunner extends Thread {
     /**Ein-/Ausschalter fuer den Thread */
     public boolean running = true;
@@ -32,7 +35,7 @@ public class MonteCarloRunner extends Thread {
      * Default Konstruktor
      * Initialisiert Treffer und Versuche mit 0
      */
-    public MonteCarloRunner(){
+    protected MonteCarloRunner(){
         setTreffer(0);
         setVersuche(0);
     }
