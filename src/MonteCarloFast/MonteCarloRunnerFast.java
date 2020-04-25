@@ -1,14 +1,16 @@
 package MonteCarloFast;
 
+import MonteCarlo.Point;
+
 import java.math.BigDecimal;
 
 public class MonteCarloRunnerFast extends Thread {
     /**Ein-/Ausschalter für den Thread */
     public boolean running = true;
 
-    /** {@link #versuche} - Zähler für die Versuche*/
+    /** Zähler für die Versuche*/
     private BigDecimal versuche;
-    /** {@link #treffer} - Zähler für die Treffer*/
+    /** Zähler für die Treffer*/
     private BigDecimal treffer;
 
     //getter und setter
@@ -42,13 +44,21 @@ public class MonteCarloRunnerFast extends Thread {
         setTreffer(BigDecimal.ZERO);
         setVersuche(BigDecimal.ZERO);
     }
+    /**
+     * Run Methode des Threads<br>
+     * Generiert zwei Zufallswerte und überprüft diese auf einen Treffer.
+     * Zählt Versuche und Treffer.
+     */
     public void run(){
         while(running){
+            //Zufallswerte x und y erzeugen.
             double x = Math.random();
             double y = Math.random();
+            //Wenn x^2 + y^2 <= 1 Treffer erfassen
             if(!(x*x+y*y >1)){
                 incrementTreffer();
             }
+            //Versuch erfassen
             incrementVersuche();
         }
     }

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class MonteCarloFast implements CalculatePi {
     //Konstanten
-    /**{@link #MC} -  Der bei der Berechnung verwendete MathContext*/
+    /**Der bei der Berechnung verwendete MathContext*/
     public final MathContext MC = new MathContext(50, RoundingMode.HALF_EVEN);
-    /**{@link #ThreadList} - Liste welche die Threads enthält um diese zu Verwalten*/
+    /**Liste welche die Threads enthält um diese zu Verwalten*/
     public final ArrayList<MonteCarloRunnerFast> ThreadList = new ArrayList<MonteCarloRunnerFast>();
 
     @Override
