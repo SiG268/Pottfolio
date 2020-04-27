@@ -2,6 +2,7 @@ package ApproximativeReihenverfahren.Ramanujan;
 
 import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -12,11 +13,17 @@ import java.util.ArrayList;
  */
 public class Ramanujan implements CalculatePi {
 
-    /** {@link #MC} -  Der bei der Berechnung verwendete MathContext*/
+    /**
+     * {@link #MC} -  Der bei der Berechnung verwendete MathContext
+     */
     public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
-    /**{@link #ThreadList} - Liste welche die Threads enthaelt um diese zu Verwalten*/
+    /**
+     * {@link #ThreadList} - Liste welche die Threads enthaelt um diese zu Verwalten
+     */
     public final ArrayList<RamanujanRunner> ThreadList = new ArrayList<RamanujanRunner>();
-    /**{@link #COEFFICIENT} - Koeffizient vor der Summe*/
+    /**
+     * {@link #COEFFICIENT} - Koeffizient vor der Summe
+     */
     public final BigDecimal COEFFICIENT = new BigDecimal(8).sqrt(MC).divide(new BigDecimal(9801), MC);
 
     @Override
@@ -26,20 +33,19 @@ public class Ramanujan implements CalculatePi {
 
     @Override
     public boolean startCalculation(int numThreads) {
-        if(ThreadList.size()>0){
-            boolean threadrunning=false;
-            for (RamanujanRunner t:ThreadList) {
-                threadrunning=threadrunning || t.running;
+        if (ThreadList.size() > 0) {
+            boolean threadrunning = false;
+            for (RamanujanRunner t : ThreadList) {
+                threadrunning = threadrunning || t.running;
             }
-            if(!threadrunning){
+            if (!threadrunning) {
                 ThreadList.clear();
-            }
-            else{
+            } else {
                 return false;
             }
         }
-                for(int i = 0;i<numThreads;i++) {
-            RamanujanRunner t = new RamanujanRunner(i,numThreads);
+        for (int i = 0; i < numThreads; i++) {
+            RamanujanRunner t = new RamanujanRunner(i, numThreads);
             ThreadList.add(t);
             t.start();
         }
@@ -48,18 +54,18 @@ public class Ramanujan implements CalculatePi {
 
     @Override
     public void stopCalculation() {
-        for(RamanujanRunner t : ThreadList)
+        for (RamanujanRunner t : ThreadList)
             t.running = false;
-        }
+    }
 
     @Override
     public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal sum = BigDecimal.ZERO;
         //Addiert die Teilsummen der Threads zusammen
-        for(RamanujanRunner t : ThreadList){
+        for (RamanujanRunner t : ThreadList) {
             sum = sum.add(t.parcialSum);
         }
-        if(sum.equals(BigDecimal.ZERO)){
+        if (sum.equals(BigDecimal.ZERO)) {
             throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
         //Summe (der Teilsummen) * Koeffizient

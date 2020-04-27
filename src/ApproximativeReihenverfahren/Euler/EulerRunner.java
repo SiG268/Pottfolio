@@ -1,6 +1,7 @@
 package ApproximativeReihenverfahren.Euler;
 
 import Main.PiCalculationThread;
+
 import java.math.BigDecimal;
 
 /**
@@ -11,6 +12,7 @@ public class EulerRunner extends PiCalculationThread {
     /**
      * Konstruktor<br>
      * Ruft Superkonstruktor von {@link PiCalculationThread} auf
+     *
      * @param startIndex Start Index
      * @param numThreads Anzahl an Threads
      */
@@ -20,7 +22,7 @@ public class EulerRunner extends PiCalculationThread {
 
     //Es gilt: summand = 1/(index^2)
     @Override
-    public BigDecimal CalculateSummand(BigDecimal index){
+    public BigDecimal CalculateSummand(BigDecimal index) {
         BigDecimal summand = new BigDecimal(1);
         summand = summand.divide(getIndex().pow(2), MC);
         return summand;

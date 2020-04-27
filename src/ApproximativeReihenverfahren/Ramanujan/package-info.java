@@ -1,2 +1,4 @@
-/**Implementierung des Ramanujan Approximations Verfahrens*/
+/**
+ * Implementierung des Ramanujan Approximations Verfahrens
+ */
 package ApproximativeReihenverfahren.Ramanujan;

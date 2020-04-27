@@ -13,9 +13,13 @@ import java.util.ArrayList;
  */
 public class MonteCarloFast implements CalculatePi {
     //Konstanten
-    /**Der bei der Berechnung verwendete MathContext*/
+    /**
+     * Der bei der Berechnung verwendete MathContext
+     */
     public final MathContext MC = new MathContext(50, RoundingMode.HALF_EVEN);
-    /**Liste welche die Threads enthält um diese zu Verwalten*/
+    /**
+     * Liste welche die Threads enthält um diese zu Verwalten
+     */
     public final ArrayList<MonteCarloRunnerFast> ThreadList = new ArrayList<MonteCarloRunnerFast>();
 
     @Override
@@ -25,19 +29,18 @@ public class MonteCarloFast implements CalculatePi {
 
     @Override
     public boolean startCalculation(int numThreads) {
-        if(ThreadList.size()>0){
-            boolean threadrunning=false;
-            for (MonteCarloRunnerFast t:ThreadList) {
-                threadrunning=threadrunning || t.running;
+        if (ThreadList.size() > 0) {
+            boolean threadrunning = false;
+            for (MonteCarloRunnerFast t : ThreadList) {
+                threadrunning = threadrunning || t.running;
             }
-            if(!threadrunning){
+            if (!threadrunning) {
                 ThreadList.clear();
-            }
-            else{
+            } else {
                 return false;
             }
         }
-        for(int i=0; i<numThreads ; i++) {
+        for (int i = 0; i < numThreads; i++) {
             MonteCarloRunnerFast thread = new MonteCarloRunnerFast();
             ThreadList.add(thread);
             thread.start();
@@ -47,35 +50,35 @@ public class MonteCarloFast implements CalculatePi {
 
     @Override
     public void stopCalculation() {
-        for (MonteCarloRunnerFast thread:ThreadList) {
-            thread.running=false;
+        for (MonteCarloRunnerFast thread : ThreadList) {
+            thread.running = false;
         }
     }
 
     @Override
     public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal pi;
-        BigDecimal treffer=BigDecimal.ZERO;
-        BigDecimal versuche=BigDecimal.ZERO;
+        BigDecimal treffer = BigDecimal.ZERO;
+        BigDecimal versuche = BigDecimal.ZERO;
         //Addiert die treffer und die versuche der einzelnen Threads
-        for (MonteCarloRunnerFast thread:ThreadList) {
+        for (MonteCarloRunnerFast thread : ThreadList) {
             treffer = treffer.add(thread.getTreffer());
-            versuche= versuche.add(thread.getVersuche());
+            versuche = versuche.add(thread.getVersuche());
         }
-        if(versuche.equals(BigDecimal.ZERO)){
+        if (versuche.equals(BigDecimal.ZERO)) {
             throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
         //Es gilt Treffer / Versuche = pi/4 -> pi = treffer/versuche * 4
-        pi=treffer.divide(versuche, MC).multiply(new BigDecimal("4"));
+        pi = treffer.divide(versuche, MC).multiply(new BigDecimal("4"));
         return pi;
     }
 
     @Override
     public int getInternalSteps() {
-        int steps=0;
+        int steps = 0;
         //Addiert die gemachten Versuche der einzelnen Threads
-        for (MonteCarloRunnerFast thread:ThreadList) {
-            steps+=thread.getVersuche().intValue();
+        for (MonteCarloRunnerFast thread : ThreadList) {
+            steps += thread.getVersuche().intValue();
         }
         return steps;
     }

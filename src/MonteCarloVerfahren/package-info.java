@@ -1,2 +1,4 @@
-/**Implementierung des Monte-Carlo Verfahrens*/
+/**
+ * Implementierung des Monte-Carlo Verfahrens
+ */
 package MonteCarloVerfahren;

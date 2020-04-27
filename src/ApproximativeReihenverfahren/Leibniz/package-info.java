@@ -1,2 +1,4 @@
-/**Implementierung des Leibniz Approximations Verfahrens*/
+/**
+ * Implementierung des Leibniz Approximations Verfahrens
+ */
 package ApproximativeReihenverfahren.Leibniz;

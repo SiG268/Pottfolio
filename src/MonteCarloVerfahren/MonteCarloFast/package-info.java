@@ -1,2 +1,4 @@
-/**Implementierung des ueberarbeiteten MonteCarlo Approximations Verfahrens*/
+/**
+ * Implementierung des ueberarbeiteten MonteCarlo Approximations Verfahrens
+ */
 package MonteCarloVerfahren.MonteCarloFast;

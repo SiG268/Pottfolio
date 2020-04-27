@@ -6,12 +6,18 @@ import java.math.BigDecimal;
  * Threadklasse des Monte Carlo Approximations Verfahrens
  */
 public class MonteCarloRunner extends Thread {
-    /**Ein-/Ausschalter fuer den Thread */
+    /**
+     * Ein-/Ausschalter fuer den Thread
+     */
     public boolean running = true;
 
-    /**Zaehler fuer die Versuche*/
+    /**
+     * Zaehler fuer die Versuche
+     */
     private int versuche;
-    /**Zaehler fuer die Treffer*/
+    /**
+     * Zaehler fuer die Treffer
+     */
     private int treffer;
 
     //getter und setter
@@ -35,7 +41,7 @@ public class MonteCarloRunner extends Thread {
      * Default Konstruktor
      * Initialisiert Treffer und Versuche mit 0
      */
-    protected MonteCarloRunner(){
+    protected MonteCarloRunner() {
         setTreffer(0);
         setVersuche(0);
     }
@@ -44,12 +50,13 @@ public class MonteCarloRunner extends Thread {
 
     /**
      * Erzeugt einen random {@link Point}
+     *
      * @return Gibt einen {@link Point} zurueck
      */
-    private Point randomPoint(){
+    private Point randomPoint() {
         BigDecimal x = BigDecimal.valueOf(Math.random());
         BigDecimal y = BigDecimal.valueOf(Math.random());
-        return new Point(x,y);
+        return new Point(x, y);
     }
 
     //TO-DO des Threads
@@ -58,12 +65,12 @@ public class MonteCarloRunner extends Thread {
      * Run Methode des Threads
      * Erzeugt einen Random {@link Point} und schaut ob dieser ein Treffer ist oder nicht.
      */
-    public void run(){
-        while(running) {
+    public void run() {
+        while (running) {
             //Erzeugt einen zufaelligen Punkt
             Point random = randomPoint();
             //Wenn die Distanz zwischen Mittelpunkt und erzeugtem Punkt <=1 (also !(>1) erhoehe Trefferzaehler
-            treffer+=random.eval();
+            treffer += random.eval();
             //Erhoehe Versuchszaehler
             this.versuche++;
         }
