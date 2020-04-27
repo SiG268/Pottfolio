@@ -1,0 +1,2 @@
+/**Angepasste Exceptions*/
+package Exceptions;

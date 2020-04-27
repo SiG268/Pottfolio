@@ -1,4 +1,4 @@
-package MonteCarloFast;
+package MonteCarloVerfahren.MonteCarloFast;
 
 import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;

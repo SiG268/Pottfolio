@@ -1,13 +1,8 @@
 package Main;
 
-
 import Exceptions.IntegerOverflowException;
 import Exceptions.NoCalculationExecutedException;
-import Euler.Euler;
-import Leibniz.Leibniz;
-import MonteCarlo.MonteCarlo;
-import MonteCarloFast.MonteCarloFast;
-import Ramanujan.Ramanujan;
+import ApproximativeReihenverfahren.Euler.Euler;
 
 
 import java.math.BigDecimal;

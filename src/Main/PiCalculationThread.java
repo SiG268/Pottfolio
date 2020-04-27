@@ -5,7 +5,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 /**
- * Abstrakte Elternklasse von Euler-,Ramanujan- und LeibnizRunner
+ * Abstrakte Elternklasse von ApproximativeReihenverfahren.Euler-,ApproximativeReihenverfahren.Ramanujan- und LeibnizRunner
  */
 public abstract class PiCalculationThread extends Thread{
     //Konstanten

@@ -1,4 +1,4 @@
-package Euler;
+package ApproximativeReihenverfahren.Ramanujan;
 
 import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
@@ -8,15 +8,16 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
- * PI Kalkulationsklasse des Euler Approximations Verfahrens
+ * PI Kalkulationsklasse des ApproximativeReihenverfahren.Ramanujan Approximations Verfahrens
  */
-public class Euler implements CalculatePi {
-    //Konstanten
-    /**Der bei der Berechnung verwendete MathContext*/
-    public final MathContext MC = new MathContext(100, RoundingMode.HALF_EVEN);
-    /**Liste welche die Threads enthaelt um diese zu Verwalten*/
-    private final ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
+public class Ramanujan implements CalculatePi {
 
+    /** {@link #MC} -  Der bei der Berechnung verwendete MathContext*/
+    public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
+    /**{@link #ThreadList} - Liste welche die Threads enthaelt um diese zu Verwalten*/
+    public final ArrayList<RamanujanRunner> ThreadList = new ArrayList<RamanujanRunner>();
+    /**{@link #COEFFICIENT} - Koeffizient vor der Summe*/
+    public final BigDecimal COEFFICIENT = new BigDecimal(8).sqrt(MC).divide(new BigDecimal(9801), MC);
 
     @Override
     public boolean startCalculation() {
@@ -27,7 +28,7 @@ public class Euler implements CalculatePi {
     public boolean startCalculation(int numThreads) {
         if(ThreadList.size()>0){
             boolean threadrunning=false;
-            for (EulerRunner t:ThreadList) {
+            for (RamanujanRunner t:ThreadList) {
                 threadrunning=threadrunning || t.running;
             }
             if(!threadrunning){
@@ -37,8 +38,8 @@ public class Euler implements CalculatePi {
                 return false;
             }
         }
-        for(int i = 1;i<=numThreads;i++) {
-            EulerRunner t = new EulerRunner(i,numThreads);
+                for(int i = 0;i<numThreads;i++) {
+            RamanujanRunner t = new RamanujanRunner(i,numThreads);
             ThreadList.add(t);
             t.start();
         }
@@ -47,23 +48,24 @@ public class Euler implements CalculatePi {
 
     @Override
     public void stopCalculation() {
-        for(EulerRunner t : ThreadList)
+        for(RamanujanRunner t : ThreadList)
             t.running = false;
-    }
+        }
 
     @Override
     public BigDecimal getValue() throws NoCalculationExecutedException {
-        BigDecimal pi = BigDecimal.ZERO;
+        BigDecimal sum = BigDecimal.ZERO;
         //Addiert die Teilsummen der Threads zusammen
-        for(EulerRunner t : ThreadList){
-            pi = pi.add(t.parcialSum);
+        for(RamanujanRunner t : ThreadList){
+            sum = sum.add(t.parcialSum);
         }
-        if(pi.equals(BigDecimal.ZERO)){
+        if(sum.equals(BigDecimal.ZERO)){
             throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
-        //Teilsummen ergeben (pi^2)/6 -> Aufloesen nach Pi
-        pi = pi.multiply(new BigDecimal(6));
-        pi = pi.sqrt(MC);
+        //Summe (der Teilsummen) * Koeffizient
+        sum = sum.multiply(COEFFICIENT);
+        //Kehrwert bilden
+        BigDecimal pi = BigDecimal.ONE.divide(sum, MC);
         return pi;
     }
 
@@ -71,16 +73,16 @@ public class Euler implements CalculatePi {
     public int getInternalSteps() {
         int internalSteps = 0;
         //Addiert die internalSteps der einzelnen Threads
-        for(EulerRunner r : ThreadList){
+        for (RamanujanRunner t : ThreadList) {
             //Es gilt: Index = STARTINDEX+NUMTHREADS*Rechenschritte
             // => Schritte = (Index-STARTINDEX)/NUMTHREADS
-            internalSteps += (r.getIndex().intValue()-r.STARTINDEX)/r.NUMTHREADS.intValue();
+            internalSteps += (t.getIndex().intValue() - t.STARTINDEX) / t.NUMTHREADS.intValue();
         }
         return internalSteps;
     }
 
     @Override
     public String getMethodName() {
-        return "Euler series approximation";
+        return "ApproximativeReihenverfahren.Ramanujan series approximation";
     }
 }

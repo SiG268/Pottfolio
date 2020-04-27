@@ -1,10 +1,10 @@
-package Ramanujan;
+package ApproximativeReihenverfahren.Ramanujan;
 
 import Main.PiCalculationThread;
 import java.math.BigDecimal;
 
 /**
- * Threadklasse des Ramanujan Approximations Verfahrens
+ * Threadklasse des ApproximativeReihenverfahren.Ramanujan Approximations Verfahrens
  */
 public class RamanujanRunner extends PiCalculationThread {
     //Konstanten

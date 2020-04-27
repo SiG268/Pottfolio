@@ -1,18 +1,22 @@
-package Leibniz;
+package ApproximativeReihenverfahren.Euler;
 
-import Euler.EulerRunner;
 import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
-
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
- * PI Kalkulationsklasse des Leibniz Approximations Verfahrens
+ * PI Kalkulationsklasse des ApproximativeReihenverfahren.Euler Approximations Verfahrens
  */
-public class Leibniz implements CalculatePi {
+public class Euler implements CalculatePi {
+    //Konstanten
+    /**Der bei der Berechnung verwendete MathContext*/
+    public final MathContext MC = new MathContext(100, RoundingMode.HALF_EVEN);
     /**Liste welche die Threads enthaelt um diese zu Verwalten*/
-    public final ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
+    private final ArrayList<EulerRunner> ThreadList = new ArrayList<EulerRunner>();
+
 
     @Override
     public boolean startCalculation() {
@@ -23,7 +27,7 @@ public class Leibniz implements CalculatePi {
     public boolean startCalculation(int numThreads) {
         if(ThreadList.size()>0){
             boolean threadrunning=false;
-            for (LeibnizRunner t:ThreadList) {
+            for (EulerRunner t:ThreadList) {
                 threadrunning=threadrunning || t.running;
             }
             if(!threadrunning){
@@ -34,7 +38,7 @@ public class Leibniz implements CalculatePi {
             }
         }
         for(int i = 1;i<=numThreads;i++) {
-            LeibnizRunner t = new LeibnizRunner(i,numThreads);
+            EulerRunner t = new EulerRunner(i,numThreads);
             ThreadList.add(t);
             t.start();
         }
@@ -43,7 +47,7 @@ public class Leibniz implements CalculatePi {
 
     @Override
     public void stopCalculation() {
-        for(LeibnizRunner t : ThreadList)
+        for(EulerRunner t : ThreadList)
             t.running = false;
     }
 
@@ -51,14 +55,15 @@ public class Leibniz implements CalculatePi {
     public BigDecimal getValue() throws NoCalculationExecutedException {
         BigDecimal pi = BigDecimal.ZERO;
         //Addiert die Teilsummen der Threads zusammen
-        for(LeibnizRunner r : ThreadList){
-            pi = pi.add(r.parcialSum);
+        for(EulerRunner t : ThreadList){
+            pi = pi.add(t.parcialSum);
         }
         if(pi.equals(BigDecimal.ZERO)){
             throw new NoCalculationExecutedException("No calculation step was executed. Increase delay");
         }
-        //Teilsummen ergeben pi/4 -> Aufloesen nach Pi
-        pi = pi.multiply(new BigDecimal("4"));
+        //Teilsummen ergeben (pi^2)/6 -> Aufloesen nach Pi
+        pi = pi.multiply(new BigDecimal(6));
+        pi = pi.sqrt(MC);
         return pi;
     }
 
@@ -66,15 +71,16 @@ public class Leibniz implements CalculatePi {
     public int getInternalSteps() {
         int internalSteps = 0;
         //Addiert die internalSteps der einzelnen Threads
-        for(LeibnizRunner r : ThreadList){
+        for(EulerRunner r : ThreadList){
+            //Es gilt: Index = STARTINDEX+NUMTHREADS*Rechenschritte
             // => Schritte = (Index-STARTINDEX)/NUMTHREADS
-            internalSteps += (r.getIndex().intValue()-(r.STARTINDEX))/r.NUMTHREADS.intValue();
+            internalSteps += (r.getIndex().intValue()-r.STARTINDEX)/r.NUMTHREADS.intValue();
         }
         return internalSteps;
     }
 
     @Override
     public String getMethodName() {
-        return "Leibniz series approximation";
+        return "ApproximativeReihenverfahren.Euler series approximation";
     }
 }

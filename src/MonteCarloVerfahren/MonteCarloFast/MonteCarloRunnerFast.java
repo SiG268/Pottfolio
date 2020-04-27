@@ -1,6 +1,4 @@
-package MonteCarloFast;
-
-import MonteCarlo.Point;
+package MonteCarloVerfahren.MonteCarloFast;
 
 import java.math.BigDecimal;
 

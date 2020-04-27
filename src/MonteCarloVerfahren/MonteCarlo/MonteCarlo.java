@@ -1,4 +1,4 @@
-package MonteCarlo;
+package MonteCarloVerfahren.MonteCarlo;
 import Exceptions.NoCalculationExecutedException;
 import Main.CalculatePi;
 import java.math.BigDecimal;
@@ -7,9 +7,9 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
- * PI Kalkulationsklasse des Monte Carlo Approximations Verfahrens
- * @deprecated Slow. Replaced by {@link MonteCarloFast}
+ * Slow. Replaced by {@link MonteCarloVerfahren.MonteCarloFast}
  */
+@Deprecated
 public class MonteCarlo implements CalculatePi {
     //Konstanten
     /** Der bei der Berechnung verwendete MathContext*/

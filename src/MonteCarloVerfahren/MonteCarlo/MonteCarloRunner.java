@@ -1,4 +1,4 @@
-package MonteCarlo;
+package MonteCarloVerfahren.MonteCarlo;
 
 import java.math.BigDecimal;
 

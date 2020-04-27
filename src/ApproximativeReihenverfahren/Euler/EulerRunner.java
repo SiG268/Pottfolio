@@ -1,10 +1,10 @@
-package Euler;
+package ApproximativeReihenverfahren.Euler;
 
 import Main.PiCalculationThread;
 import java.math.BigDecimal;
 
 /**
- * Threadklasse des Euler Approximations Verfahrens
+ * Threadklasse des ApproximativeReihenverfahren.Euler Approximations Verfahrens
  */
 public class EulerRunner extends PiCalculationThread {
 
