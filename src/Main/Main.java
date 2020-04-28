@@ -8,6 +8,8 @@ import Exceptions.NoCalculationExecutedException;
 import MonteCarloVerfahren.MonteCarloFast.MonteCarloFast;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +23,10 @@ public class Main {
      * Enthaelt den Wert bis zu welcher Praezision das PI berechnet wird
      */
     private static final int MAX_PRECISION = 12;
-
+    /**
+     * MathContext ein Pi Ergebnis auf 30 Nachkommastellen rundet
+     */
+    private static MathContext MC30 = new MathContext(31, RoundingMode.HALF_EVEN);
     /**
      * Wert bei dem der Interger in das negative uebergeht
      */
@@ -77,11 +82,11 @@ public class Main {
                         return new MonteCarloFast();
 
                     default:
-                        System.out.println("Bitte nur Zahlen von 1-4 Eingeben");
+                        System.out.println("Bitte nur Zahlen von 1-4 eingeben");
                         break;
                 }
             } else {
-                System.out.println("Bitte nur Zahlen von 1-4 Eingeben");
+                System.out.println("Bitte nur Zahlen von 1-4 eingeben");
                 scanner.next();
             }
         }
@@ -95,9 +100,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int number = 0;
         do {
-            System.out.println("Wie viele Threads mchten sie verwenden? (1-n)");
+            System.out.println("Wie viele Threads moechten sie verwenden? (1-n)");
             while (!scanner.hasNextInt()) {
-                System.out.println("Bitte gib eine positive natürliche Zahl ein");
+                System.out.println("Bitte gib eine positive natuerliche Zahl ein");
                 scanner.next(); // this is important!
             }
             number = scanner.nextInt();
@@ -190,11 +195,11 @@ public class Main {
                 newPrec = precision(result, newResult);
             } catch (IntegerOverflowException e) {
                 e.printStackTrace();
-                System.out.println("pi (" + newPrec + "): " + newResult);
+                System.out.println("pi (" + newPrec + "): " + newResult.round(MC30));
                 break;
             }
             if (newPrec != prec) {
-                System.out.println("pi (" + newPrec + "): " + newResult);
+                System.out.println("pi (" + newPrec + "): " + newResult.round(MC30));
                 prec = newPrec;
             }
             result = newResult;
