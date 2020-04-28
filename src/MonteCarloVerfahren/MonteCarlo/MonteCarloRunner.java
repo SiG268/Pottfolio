@@ -21,18 +21,34 @@ public class MonteCarloRunner extends Thread {
     private int treffer;
 
     //getter und setter
+
+    /**
+     * Rueckgabe der benoetigten Versuch
+     * @return Versuche
+     */
     public int getVersuche() {
         return versuche;
     }
 
+    /**
+     * Setzen der Versuche
+     * @param versuche Versuche
+     */
     public void setVersuche(int versuche) {
         this.versuche = versuche;
     }
 
+    /**
+     * Rueckgabe der erzielten Treffer
+     * @return Treffer
+     */
     public int getTreffer() {
         return treffer;
     }
-
+    /**
+     * Setzen der Treffer
+     * @param treffer Treffer
+     */
     public void setTreffer(int treffer) {
         this.treffer = treffer;
     }
@@ -70,9 +86,9 @@ public class MonteCarloRunner extends Thread {
             //Erzeugt einen zufaelligen Punkt
             Point random = randomPoint();
             //Wenn die Distanz zwischen Mittelpunkt und erzeugtem Punkt <=1 (also !(>1) erhoehe Trefferzaehler
-            treffer += random.eval();
+            setTreffer(getTreffer()+random.eval());
             //Erhoehe Versuchszaehler
-            this.versuche++;
+            setVersuche(getVersuche()+1);
         }
 
     }

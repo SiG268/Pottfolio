@@ -13,7 +13,7 @@ public class Leibniz implements CalculatePi {
     /**
      * Liste welche die Threads enthaelt um diese zu Verwalten
      */
-    public final ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
+    private final ArrayList<LeibnizRunner> ThreadList = new ArrayList<LeibnizRunner>();
 
     @Override
     public boolean startCalculation() {

@@ -2,44 +2,66 @@ package MonteCarloVerfahren.MonteCarloFast;
 
 import java.math.BigDecimal;
 
+/**
+ * Ueberarbeitete und Verbesserte Threadklasse
+ */
 public class MonteCarloRunnerFast extends Thread {
     /**
-     * Ein-/Ausschalter für den Thread
+     * Ein-/Ausschalter fuer den Thread
      */
     public boolean running = true;
 
     /**
-     * Zähler für die Versuche
+     * Zaehler fuer die Versuche
      */
     private BigDecimal versuche;
     /**
-     * Zähler für die Treffer
+     * Zaehler fuer die Treffer
      */
     private BigDecimal treffer;
 
     //getter und setter
+    /**
+     * Rueckgabe der benoetigten Versuch
+     * @return Versuche
+     */
     public BigDecimal getVersuche() {
         return versuche;
     }
-
+    /**
+     * Setzen der Versuche
+     * @param versuche Versuche
+     */
     public void setVersuche(BigDecimal versuche) {
         this.versuche = versuche;
     }
-
+    /**
+     * Rueckgabe der erzielten Treffer
+     * @return Treffer
+     */
     public BigDecimal getTreffer() {
         return treffer;
     }
-
+    /**
+     * Setzen der Treffer
+     * @param treffer Treffer
+     */
     public void setTreffer(BigDecimal treffer) {
         this.treffer = treffer;
     }
 
+    /**
+     * Erhoehung der Versuche um den Wert Eins
+     */
     public void incrementVersuche() {
-        this.versuche = this.versuche.add(BigDecimal.ONE);
+        setVersuche(getVersuche().add(BigDecimal.ONE));
     }
 
+    /**
+     * Erhoehung der Treffer um den Wert Eins
+     */
     public void incrementTreffer() {
-        this.treffer = this.treffer.add(BigDecimal.ONE);
+        setTreffer(getTreffer().add(BigDecimal.ONE));
     }
 
     /**
@@ -53,8 +75,8 @@ public class MonteCarloRunnerFast extends Thread {
 
     /**
      * Run Methode des Threads<br>
-     * Generiert zwei Zufallswerte und überprüft diese auf einen Treffer.
-     * Zählt Versuche und Treffer.
+     * Generiert zwei Zufallswerte und ueberprueft diese auf einen Treffer.
+     * Zaehlt Versuche und Treffer.
      */
     public void run() {
         while (running) {

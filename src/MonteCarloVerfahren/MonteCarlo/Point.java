@@ -3,7 +3,7 @@ package MonteCarloVerfahren.MonteCarlo;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
+/**BigDecimal-Punkt Objekt*/
 public class Point {
     //Konstanten
     /**
@@ -20,18 +20,33 @@ public class Point {
     private BigDecimal y;
 
     //getter und setter
+
+    /**
+     * Gibt X Koordinate zurueck
+     * @return X Koordinate
+     */
     public BigDecimal getX() {
         return x;
     }
 
+    /**
+     * Setzt X Koordinate
+     * @param x X Koordinate
+     */
     public void setX(BigDecimal x) {
         this.x = x;
     }
-
+    /**
+     * Gibt Y Koordinate zurueck
+     * @return Y Koordinate
+     */
     public BigDecimal getY() {
         return y;
     }
-
+    /**
+     * Setzt Y Koordinate
+     * @param y Y Koordinate
+     */
     public void setY(BigDecimal y) {
         this.y = y;
     }
@@ -47,7 +62,7 @@ public class Point {
 
     /**
      * Konstrukter<br>
-     * Erzeugt einen Punkt mit den uebergabeparamtern
+     * Erzeugt einen Punkt an X,Y
      *
      * @param x X Koordinate
      * @param y Y Koordinate

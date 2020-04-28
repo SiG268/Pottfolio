@@ -17,11 +17,11 @@ public class MonteCarlo implements CalculatePi {
     /**
      * Der bei der Berechnung verwendete MathContext
      */
-    public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
+    private final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
     /**
      * Liste welche die Threads enthaelt um diese zu Verwalten
      */
-    public final ArrayList<MonteCarloRunner> ThreadList = new ArrayList<MonteCarloRunner>();
+    private final ArrayList<MonteCarloRunner> ThreadList = new ArrayList<MonteCarloRunner>();
 
     @Override
     public boolean startCalculation() {

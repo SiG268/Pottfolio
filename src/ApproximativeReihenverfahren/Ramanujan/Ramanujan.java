@@ -16,15 +16,15 @@ public class Ramanujan implements CalculatePi {
     /**
      * {@link #MC} -  Der bei der Berechnung verwendete MathContext
      */
-    public final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
+    private final MathContext MC = new MathContext(10000, RoundingMode.HALF_EVEN);
     /**
      * {@link #ThreadList} - Liste welche die Threads enthaelt um diese zu Verwalten
      */
-    public final ArrayList<RamanujanRunner> ThreadList = new ArrayList<RamanujanRunner>();
+    private final ArrayList<RamanujanRunner> ThreadList = new ArrayList<RamanujanRunner>();
     /**
      * {@link #COEFFICIENT} - Koeffizient vor der Summe
      */
-    public final BigDecimal COEFFICIENT = new BigDecimal(8).sqrt(MC).divide(new BigDecimal(9801), MC);
+    private final BigDecimal COEFFICIENT = new BigDecimal(8).sqrt(MC).divide(new BigDecimal(9801), MC);
 
     @Override
     public boolean startCalculation() {

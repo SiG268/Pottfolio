@@ -8,21 +8,24 @@ import Exceptions.NoCalculationExecutedException;
 import MonteCarloVerfahren.MonteCarloFast.MonteCarloFast;
 
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Main Klasse<br>
+ *   Zustaendig fuer die Benutzereingabe, Berchnung der Genauigkeit, und starten/stoppen der Verfahren
+ */
 public class Main {
     //Konstanten
     /**
      * Enthaelt den Wert bis zu welcher Praezision das PI berechnet wird
      */
-    public static final int MAX_PRECISION = 12;
+    private static final int MAX_PRECISION = 12;
 
     /**
      * Wert bei dem der Interger in das negative uebergeht
      */
-    public static final BigDecimal OVERFLOW_INT = new BigDecimal("2147483648");
+    private static final BigDecimal OVERFLOW_INT = new BigDecimal("2147483648");
 
     /**
      * Delaymethode: <br>
@@ -32,7 +35,7 @@ public class Main {
      * @param delay Laenge des Delays
      */
 
-    public static void someDelay(TimeUnit unit, int delay) {
+    private static void someDelay(TimeUnit unit, int delay) {
         try {
             unit.sleep(delay);
         } catch (InterruptedException e) {
@@ -42,13 +45,13 @@ public class Main {
 
     /**
      * Benutzereingabe zur Auswahl des Approximationsverfahren
-     * @return ausgewähltes Approximationsverfahren
+     * @return ausgewaehltes Approximationsverfahren
      */
-    public static CalculatePi userInputApprox() {
+    private static CalculatePi userInputApprox() {
         Scanner scanner = new Scanner(System.in);
         CalculatePi pi;
         int number = 0;
-        System.out.println("Welches Approximations Verfahren möchten Sie verwenden?\n" +
+        System.out.println("Welches Approximations Verfahren moechten Sie verwenden?\n" +
                 "1 - Euler\n" +
                 "2 - Leibniz\n" +
                 "3 - Ramanujan\n" +
@@ -88,11 +91,11 @@ public class Main {
      * Benutzereingabe zur festlegung der Threads
      * @return Anzahl der Threads
      */
-    public static int userInputThreads() {
+    private static int userInputThreads() {
         Scanner scanner = new Scanner(System.in);
         int number = 0;
         do {
-            System.out.println("Wie viele Threads möchten sie verwenden? (1-n)");
+            System.out.println("Wie viele Threads mchten sie verwenden? (1-n)");
             while (!scanner.hasNextInt()) {
                 System.out.println("Bitte gib eine positive natürliche Zahl ein");
                 scanner.next(); // this is important!
@@ -112,7 +115,7 @@ public class Main {
      */
     /*Vergleicht zwei BigDecimal Zahlen und gibt die Anzahl der gleichen Nachkommastellen
     (bis die erste Stelle sich unterscheidet) zurueck*/
-    public static int precision(BigDecimal res, BigDecimal newRes) throws IntegerOverflowException {
+    private static int precision(BigDecimal res, BigDecimal newRes) throws IntegerOverflowException {
         if (res.compareTo(OVERFLOW_INT) != -1 || newRes.compareTo(OVERFLOW_INT) != -1) {
             throw new IntegerOverflowException("Can´t evaluate pi precision");
         }
@@ -156,6 +159,11 @@ public class Main {
     }
 
     //TO-DO des Programms
+
+    /**
+     * Main-Methode zur Durchfuehrung der Berechnung
+     * @param args Parameter
+     */
     public static void main(String[] args) {
         //Benutzereingaben
         CalculatePi pi = userInputApprox();
