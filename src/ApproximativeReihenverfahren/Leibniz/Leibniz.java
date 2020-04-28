@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
- * PI Kalkulationsklasse des ApproximativeReihenverfahren.Leibniz Approximations Verfahrens
+ * PI Kalkulationsklasse des Leibniz Approximations Verfahrens
  */
 public class Leibniz implements CalculatePi {
     /**
@@ -75,6 +75,6 @@ public class Leibniz implements CalculatePi {
 
     @Override
     public String getMethodName() {
-        return "ApproximativeReihenverfahren.Leibniz series approximation";
+        return "Leibniz series approximation";
     }
 }

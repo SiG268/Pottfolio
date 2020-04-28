@@ -5,7 +5,7 @@ import Main.PiCalculationThread;
 import java.math.BigDecimal;
 
 /**
- * Threadklasse des ApproximativeReihenverfahren.Leibniz Approximations Verfahrens
+ * Threadklasse des Leibniz Approximations Verfahrens
  */
 public class LeibnizRunner extends PiCalculationThread {
     private static final BigDecimal TWO = new BigDecimal(2);

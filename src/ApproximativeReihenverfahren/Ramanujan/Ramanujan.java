@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
- * PI Kalkulationsklasse des ApproximativeReihenverfahren.Ramanujan Approximations Verfahrens
+ * PI Kalkulationsklasse des Ramanujan Approximations Verfahrens
  */
 public class Ramanujan implements CalculatePi {
 
@@ -89,6 +89,6 @@ public class Ramanujan implements CalculatePi {
 
     @Override
     public String getMethodName() {
-        return "ApproximativeReihenverfahren.Ramanujan series approximation";
+        return "Ramanujan series approximation";
     }
 }

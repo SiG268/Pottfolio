@@ -5,7 +5,7 @@ import Main.PiCalculationThread;
 import java.math.BigDecimal;
 
 /**
- * Threadklasse des ApproximativeReihenverfahren.Ramanujan Approximations Verfahrens
+ * Threadklasse des Ramanujan Approximations Verfahrens
  */
 public class RamanujanRunner extends PiCalculationThread {
     //Konstanten

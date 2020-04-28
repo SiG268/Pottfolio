@@ -1,10 +1,15 @@
 package Main;
 
 import ApproximativeReihenverfahren.Euler.Euler;
+import ApproximativeReihenverfahren.Leibniz.Leibniz;
+import ApproximativeReihenverfahren.Ramanujan.Ramanujan;
 import Exceptions.IntegerOverflowException;
 import Exceptions.NoCalculationExecutedException;
+import MonteCarloVerfahren.MonteCarloFast.MonteCarloFast;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
@@ -33,6 +38,68 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Benutzereingabe zur Auswahl des Approximationsverfahren
+     * @return ausgewähltes Approximationsverfahren
+     */
+    public static CalculatePi userInputApprox() {
+        Scanner scanner = new Scanner(System.in);
+        CalculatePi pi;
+        int number = 0;
+        System.out.println("Welches Approximations Verfahren möchten Sie verwenden?\n" +
+                "1 - Euler\n" +
+                "2 - Leibniz\n" +
+                "3 - Ramanujan\n" +
+                "4 - Monte-Carlo");
+        while (true) {
+            if (scanner.hasNextInt()) {
+                number = scanner.nextInt();
+                switch (number) {
+                    case 1:
+                        System.out.println("Euler");
+                        return new Euler();
+
+                    case 2:
+                        System.out.println("Leibniz");
+                        return new Leibniz();
+
+                    case 3:
+                        System.out.println("Ramanujan");
+                        return new Ramanujan();
+
+                    case 4:
+                        System.out.println("Monte-Carlo");
+                        return new MonteCarloFast();
+
+                    default:
+                        System.out.println("Bitte nur Zahlen von 1-4 Eingeben");
+                        break;
+                }
+            } else {
+                System.out.println("Bitte nur Zahlen von 1-4 Eingeben");
+                scanner.next();
+            }
+        }
+    }
+
+    /**
+     * Benutzereingabe zur festlegung der Threads
+     * @return Anzahl der Threads
+     */
+    public static int userInputThreads() {
+        Scanner scanner = new Scanner(System.in);
+        int number = 0;
+        do {
+            System.out.println("Wie viele Threads möchten sie verwenden? (1-n)");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Bitte gib eine positive natürliche Zahl ein");
+                scanner.next(); // this is important!
+            }
+            number = scanner.nextInt();
+        } while (number <= 0);
+        return number;
     }
 
     /**
@@ -90,10 +157,13 @@ public class Main {
 
     //TO-DO des Programms
     public static void main(String[] args) {
-        CalculatePi pi = new Euler();
+        //Benutzereingaben
+        CalculatePi pi = userInputApprox();
+        int threads = userInputThreads();
+
         //Startnachricht und Start der Berechnung
-        System.out.println("Start: " + pi.getMethodName());
-        pi.startCalculation(8);
+        System.out.println("Start: " + pi.getMethodName()+ "(" + threads + " Threads)");
+        pi.startCalculation(threads);
 
         int prec = 0;
         BigDecimal result = BigDecimal.ZERO;

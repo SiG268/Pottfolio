@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
- * PI Kalkulationsklasse des ApproximativeReihenverfahren.Euler Approximations Verfahrens
+ * PI Kalkulationsklasse des Euler Approximations Verfahrens
  */
 public class Euler implements CalculatePi {
     //Konstanten
@@ -85,6 +85,6 @@ public class Euler implements CalculatePi {
 
     @Override
     public String getMethodName() {
-        return "ApproximativeReihenverfahren.Euler series approximation";
+        return "Euler series approximation";
     }
 }
